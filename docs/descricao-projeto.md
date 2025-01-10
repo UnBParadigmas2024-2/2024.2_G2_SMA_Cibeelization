@@ -8,6 +8,8 @@ JADE (Java Agent Development Framework) é um framework poderoso para a criaçã
 
 Neste projeto, vamos simular o comportamento de uma colmeia para uma implementação em Java usando JADE, onde os agentes representarão diferentes papéis como rainha, operárias, larvas e intrusos, entre outros.
 
+**_melhorar a introdução teórica incluindo bibliografia..._**
+
 ### Agentes do Sistema
 
 * Rainha: Cria novas larvas periodicamente.
@@ -23,7 +25,7 @@ Neste projeto, vamos simular o comportamento de uma colmeia para uma implementa�
 * Forrageira: Recolhe néctar e pólen para a produção de mel.
 * Guardião: Vigia a entrada da colmeia.
 * Meteorologista: Monitora as condições climáticas para informar as exploradoras e forrageiras.
-* **_continuar descrevendo aqui os agentes..._**
+* **_continuar descrevendo aqui os agentes, se houver mais..._**
 
 ## Metodologia
 
@@ -39,6 +41,8 @@ A implementação será dividida em partes, com cada membro da equipe responsáv
 8.  Testes: Criar casos de teste para garantir que o sistema funciona como esperado.
 9.  Documentação: Escrever a documentação do código e do sistema.
 10. Otimização: Identificar gargalos e otimizar o desempenho do sistema.
+    
+**_revisar a metodologia e continuar descrevendo aqui outras funções se houver..._**
 
 ### Divisão de Trabalho
 
@@ -59,7 +63,7 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 | Forrageira    | Se o estoque de mel estiver baixo, a forrageira intensifica suas saídas para coletar recursos. | |
 | Guardião      | Se um intruso for detectado, o guardião alerta toda a colmeia, ativando soldados e operárias. | |
 | Meteorologista| Se as condições forem desfavoráveis (chuva, tempestade), interrompe as missões externas para proteger as abelhas.| |
-| **_continuar escrevendo aqui os demais módulos..._** |      |                  |
+| **_continuar escrevendo aqui os demais agentes se houver..._** |      |                  |
 
 ### Regras de interação entre agentes
 
@@ -68,7 +72,9 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 * Cuidado com as larvas: A Enfermeira verifica constantemente o estado das larvas para garantir que recebam mel suficiente para se transformarem em operárias.
 * Clima e exploração: O Meteorologista avisa o Exploradora e o Forrageira sobre condições climáticas ruins para evitar perdas desnecessárias.
 * Limpeza da colmeia: A Limpadora trabalha para manter a colmeia limpa e garantir que as operárias possam se concentrar em suas tarefas.
-* **_continuar escrevendo aqui as demias interações..._**
+
+
+**_continuar escrevendo aqui as demais interações..._**
 
 ### Incrementos e Melhorias
 
@@ -78,7 +84,8 @@ Para melhorar o sistema, adicionamos as seguintes funcionalidades:
 * Persistência: Salvar o estado da colmeia em um banco de dados. ????????????????
 * Configurações Dinâmicas: Permitir ajustes nos parâmetros do sistema (tempo de vida das operárias, frequência de intrusos, etc.). ????????????????
 * Relatórios: Gerar relatórios sobre a produção de mel e o número de intrusos combatidos. ????????????????
-* **_continuar escrevendo aqui os demais incrementos e melhorias..._**
+
+**_continuar escrevendo aqui os demais incrementos e melhorias se houver..._**
 
 ## Estrutura Inicial do Projeto
 
@@ -113,3 +120,15 @@ _código_
 
 Este projeto oferece uma excelente oportunidade para explorar o paradigma multiagente usando JADE em Java. A divisão do trabalho permitirá que todos os membros da equipe contribuam significativamente para o sucesso do projeto. O sistema final será capaz de simular o comportamento de uma colmeia com agentes autônomos interagindo entre si.
 
+**_melhorar e continuar a conclusão..._**
+
+## Referências Bibliográficas
+
+[1]   
+
+
+## Histórico de versões
+
+| Versão | Data       | Descrição      |                       Autor                        |                      Revisor                       |
+| :----: | ---------- | -------------- | :------------------------------------------------: | :------------------------------------------------: |
+| `1.0`  | 09/01/2025 | Versão inicial | [Zenilda Vieira](https://github.com/zenildavieira) | [Raquel Eucaria](https://github.com/raqueleucaria) |
