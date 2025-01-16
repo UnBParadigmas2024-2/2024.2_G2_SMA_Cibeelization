@@ -8,7 +8,7 @@ Este documento mostra como instalar e configurar o JADE no Ubuntu, utilizando o 
 Antes de iniciar, certifique-se de ter instalado:
 1. **JDK do Java** 
 2. **Eclipse IDE**
-
+obs: JDK 11 é a versão mais estável para o JADE
 ---
 
 ## 📥 Instalação do JADE
