@@ -50,7 +50,7 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 
 | Módulo    | Interação                                       | Responsável(eis) |
 | --------- | ----------------------------------------------- | ---------------- |
-| Rainha    | Criação e comunicação de novas larvas           |                  |
+| Rainha    | Criação e comunicação de novas larvas           |  Bruno Martins   |
 | Larvas    | Consumo de mel e transformação em operárias     |                  |
 | Operárias | Produção de mel e combate a intrusos            |                  |
 | Intruso   | Aparição periódica e interação com as operárias |                  |
