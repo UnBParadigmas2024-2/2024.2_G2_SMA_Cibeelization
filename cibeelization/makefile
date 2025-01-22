@@ -3,7 +3,7 @@ PATH_LIBS    = src/libs
 LIBS_JAR    = $(PATH_LIBS)/jade.jar:$(PATH_LIBS)/jadeExamples.jar:$(PATH_LIBS)/commons-codec-1.3.jar
 PROJECT_CLASS_PATH = $(LIBS_JAR):$(PATH_PROJECT_JAR)
 PROJECT_GROUP    = com.bee
-JADE_AGENTS      = Bee:$(PROJECT_GROUP).App;
+JADE_AGENTS = QueenBee:$(PROJECT_GROUP).QueenBee;BeeLarva:$(PROJECT_GROUP).BeeLarva
 JADE_FLAGS 		 = -gui -agents "$(JADE_AGENTS)"
 
 .PHONY:
