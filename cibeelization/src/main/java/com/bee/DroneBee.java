@@ -4,10 +4,10 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class BeeLarva extends Agent {
+public class DroneBee extends Agent {
     @Override
     protected void setup() {
-        System.out.println("Nova larva nascida! " + getLocalName());
+        System.out.println("Novo zangão nascido! " + getLocalName());
 
         addBehaviour(new CyclicBehaviour() {
             @Override
@@ -32,11 +32,11 @@ public class BeeLarva extends Agent {
     }
 
     private void handleRequest(ACLMessage msg) {
-        if (msg.getContent().equalsIgnoreCase("Create BeeLarva")) {
+        if (msg.getContent().equalsIgnoreCase("Create DroneBee")) {
             System.out.println(getLocalName() + " recebeu um pedido para criação.");
             ACLMessage reply = msg.createReply();
             reply.setPerformative(ACLMessage.INFORM);
-            reply.setContent("BeeLarva created successfully.");
+            reply.setContent("DroneBee created successfully.");
             send(reply);
         } else {
             System.out.println(getLocalName() + " recebeu um pedido desconhecido: " + msg.getContent());
@@ -45,6 +45,6 @@ public class BeeLarva extends Agent {
 
     @Override
     protected void takeDown() {
-        System.out.println("A larva " + getLocalName() + " irá morrer");
+        System.out.println("O zangão " + getLocalName() + " irá morrer");
     }
 }

@@ -1,7 +1,7 @@
 package com.bee;
 
 import jade.core.Agent;
-import jade.core.behaviours.TickerBehaviour;
+import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -14,31 +14,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QueenBee extends Agent {
-    static int beeLarvaNumber = 0;
+    static int workerBeeNumber = 0;
     
     @Override
     protected void setup() {
         System.out.println("A abelha rainha " + getLocalName() + " está pronta!");
         
         registerInDF();
+        addBehaviour(new OneShotBehaviour() {
+            @Override
+            public void action() {
+                createDroneBee();
+            }
+        });
         
         addBehaviour(new TickerBehaviour(this, 3000) {
             @Override
             protected void onTick() {
-                createBeeLarva();
+                createWorkerBee();
             }
         });
     }
 
-    private void createBeeLarva() {
+    private void createWorkerBee() {
         try {
-            String larvaName = "Larva" + beeLarvaNumber++;
-            getContainerController().createNewAgent(larvaName, "com.bee.BeeLarva", null).start();
-            System.out.println("A abelha rainha criou uma nova larva: " + larvaName);
+            String workerName = "Operária" + workerBeeNumber++;
+            getContainerController().createNewAgent(workerName, "com.bee.WorkerBee", null).start();
+            System.out.println("A abelha rainha criou uma nova operária: " + workerName);
 
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.setContent("Bem-vinda à colmeia!");
-            msg.addReceiver(new AID(larvaName, AID.ISLOCALNAME));
+            msg.addReceiver(new AID(workerName, AID.ISLOCALNAME));
+            send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createDroneBee() {
+        try {
+            String droneName = "Zangão";
+            getContainerController().createNewAgent(droneName, "com.bee.DroneBee", null).start();
+            System.out.println("A abelha rainha criou um novo zangão: " + droneName);
+
+            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+            msg.setContent("Bem-vindo à colmeia!");
+            msg.addReceiver(new AID(droneName, AID.ISLOCALNAME));
             send(msg);
         } catch (Exception e) {
             e.printStackTrace();
