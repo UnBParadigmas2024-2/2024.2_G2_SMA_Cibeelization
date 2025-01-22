@@ -6,26 +6,16 @@ No paradigma de sistemas multiagentes, cada agente é uma entidade autônoma que
 
 JADE (Java Agent Development Framework) é um framework poderoso para a criação de sistemas multiagentes em Java, que fornece ferramentas para comunicação entre agentes e gerenciamento de ciclo de vida dos mesmos.
 
-Neste projeto, vamos simular o comportamento de uma colmeia para uma implementação em Java usando JADE, onde os agentes representarão diferentes papéis como rainha, operárias, larvas e intrusos, entre outros.
+Neste projeto, vamos simular o comportamento de uma colmeia para uma implementação em Java usando JADE, onde os agentes representarão diferentes papéis como rainha, operárias, zangões e  e intrusos.
 
 **_melhorar a introdução teórica incluindo bibliografia..._**
 
 ### Agentes do Sistema
 
-* Rainha: Cria novas larvas periodicamente.
-* Larvas: Consumem mel até se transformarem em operárias.
-* Operárias: Produzem mel ou atacam intrusos quando detectados.
+* Rainha: Cria novas operária periodicamente.
+* Operárias: Produzem mel/Geleia Real ou atacam intrusos quando detectados.
 * Intruso: Aparece periodicamente e precisa ser combatido pelas operárias.
 * Zangão: Ajuda na proteção da colmeia e na reprodução com a rainha.
-* Apicultor: Extrai mel da colmeia periodicamente.
-* Enfermeira: Cuida das larvas para garantir que cresçam saudáveis.
-* Exploradora: Sai da colmeia em busca de novas fontes de néctar.
-* Soldado: Defende a colmeia em situações de emergência.
-* Limpadora: Mantém a colmeia limpa e organizada.
-* Forrageira: Recolhe néctar e pólen para a produção de mel.
-* Guardião: Vigia a entrada da colmeia.
-* Meteorologista: Monitora as condições climáticas para informar as exploradoras e forrageiras.
-* **_continuar descrevendo aqui os agentes, se houver mais..._**
 
 ## Metodologia
 
@@ -50,20 +40,11 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 
 | Módulo    | Interação                                       | Responsável(eis) |
 | --------- | ----------------------------------------------- | ---------------- |
-| Rainha    | Criação e comunicação de novas larvas           |  Bruno Martins   |
-| Larvas    | Consumo de mel e transformação em operárias     |                  |
-| Operárias | Produção de mel e combate a intrusos            |                  |
+| Rainha    | Criação e comunicação de novas larvas           |  Bruno Martins e Lucas Felipe   |
+| Operárias | Produção de mel/Geleia Real e combate a intrusos            |                  |
 | Intruso   | Aparição periódica e interação com as operárias |                  |
-| Zangão    | Se um intruso aparecer e as operárias estiverem sobrecarregadas, o zangão assume a defesa.   | |
-| Apicultor | Se o estoque de mel for alto (mais de 80 unidades), o apicultor coleta parte do mel, evitando que a colmeia fique cheia.| |
-| Enfermeira    | Se houver larvas que não receberam mel suficiente, a enfermeira redistribui mel entre elas.| |
-| Exploradora   | Quando encontra néctar, atualiza o estado da colmeia para aumentar a produção de mel. | |
-| Soldado       | Se o intruso estiver forte ou se várias operárias morrerem, os soldados são ativados para reforçar a defesa.| |
-| Limpadora     | Se a produção de mel for alta, a limpadora remove resíduos que podem atrapalhar as operárias.| |
-| Forrageira    | Se o estoque de mel estiver baixo, a forrageira intensifica suas saídas para coletar recursos. | |
-| Guardião      | Se um intruso for detectado, o guardião alerta toda a colmeia, ativando soldados e operárias. | |
-| Meteorologista| Se as condições forem desfavoráveis (chuva, tempestade), interrompe as missões externas para proteger as abelhas.| |
-| **_continuar escrevendo aqui os demais agentes se houver..._** |      |                  |
+| Zangão    |Gera Operárias junto com a rainha periodicamente  | |
+
 
 ### Regras de interação entre agentes
 
@@ -132,3 +113,4 @@ Este projeto oferece uma excelente oportunidade para explorar o paradigma multia
 | Versão | Data       | Descrição      |                       Autor                        |                      Revisor                       |
 | :----: | ---------- | -------------- | :------------------------------------------------: | :------------------------------------------------: |
 | `1.0`  | 09/01/2025 | Versão inicial | [Zenilda Vieira](https://github.com/zenildavieira) | [Raquel Eucaria](https://github.com/raqueleucaria) |
+| `2.0`  | 22/01/2025 | remove base que saiu do trabalho e adiciona requisitos atuais | [Lucas Felipe](https://github.com/lucasfs1007) | |
