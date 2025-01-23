@@ -42,7 +42,7 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 | --------- | ----------------------------------------------- | ---------------- |
 | Rainha    | Criação e comunicação de novas larvas           |  Bruno Martins e Lucas Felipe   |
 | Operárias | Produção de mel/Geleia Real e combate a intrusos            |                  |
-| Intruso   | Aparição periódica e interação com as operárias |                  |
+| Intruso   | Aparição periódica e interação com as operárias | Heitor Marques e José Luis |
 | Zangão    |Gera Operárias junto com a rainha periodicamente  | |
 
 
