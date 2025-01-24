@@ -1,12 +1,28 @@
 package com.bee;
 
-import jade.core.Agent;
+import jade.core.Profile;
+import jade.core.ProfileImpl;
+import jade.core.Runtime;
+import jade.wrapper.AgentContainer;
+import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 
-public class App extends Agent {
-  private static final long serialVersionUID = 1L;
+public class App {
+    public static void main(String[] args) {
+        Runtime runtime = Runtime.instance();
+        Profile profile = new ProfileImpl();
+        profile.setParameter(Profile.MAIN_HOST, "localhost");
+        profile.setParameter(Profile.GUI, "true");
 
-  protected void setup() {
-    System.out.println("Z-Z-Z-Z Hello world! Z-Z-Z-Z");
-    System.out.println("My name: " + getLocalName());
-  }
+        AgentContainer mainContainer = runtime.createMainContainer(profile);
+
+        try {
+            System.out.println("Iniciando a abelha-rainha");
+            AgentController queenBee = mainContainer.createNewAgent("QueenBee", QueenBee.class.getName(), null);
+            queenBee.start();
+        } catch (StaleProxyException e) {
+            System.err.println("Error while starting agents:");
+            e.printStackTrace();
+        }
+    }
 }
