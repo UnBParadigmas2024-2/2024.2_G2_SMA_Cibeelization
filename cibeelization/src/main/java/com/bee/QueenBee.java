@@ -22,6 +22,7 @@ public class QueenBee extends Agent {
     public static int workerBeeId = 1;
     public static int droneBeeId = 1;
     public static int janitorBeeId = 1;
+    public static int plantAgentId = 0;
     private final Random random = new Random();
     
     @Override
@@ -81,6 +82,15 @@ public class QueenBee extends Agent {
                 createJanitorBee();
             }
         });
+
+        addBehaviour(new OneShotBehaviour() {
+            @Override
+            public void action() {
+                for (int i = 0; i < 15; i++) {
+                    createPlantAgent();
+                }
+            }
+        });
     }
 
     private void createWorkerBee() {
@@ -124,6 +134,16 @@ public class QueenBee extends Agent {
             msg.setContent("Bem-vindo à colmeia!");
             msg.addReceiver(new AID(janitorName, AID.ISLOCALNAME));
             send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createPlantAgent() {
+        try {
+            String plantName = "Planta" + plantAgentId++;
+            getContainerController().createNewAgent(plantName, "com.bee.PlantAgent", null).start();
+            System.out.println("Nova planta adicionada: " + plantName);
         } catch (Exception e) {
             e.printStackTrace();
         }

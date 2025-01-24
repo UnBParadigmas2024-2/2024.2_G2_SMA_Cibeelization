@@ -9,7 +9,7 @@ import jade.domain.FIPAException;
 import java.util.Random;
 
 public class PlantAgent extends Agent{
-    private boolean hasPollen;
+    public boolean hasPollen = false;
 
     @Override
     protected void setup() {
