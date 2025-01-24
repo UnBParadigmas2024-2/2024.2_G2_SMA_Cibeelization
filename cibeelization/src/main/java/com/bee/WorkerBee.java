@@ -26,6 +26,7 @@ public class WorkerBee extends Agent {
     private static int quantityOfPollen = 0;
     private static int quantityOfHoney = 0;
     private static int quantityOfRoyalJelly = 0;
+    private int eatenRoyalJelly = 0;
 
     @Override
     protected void setup() {
