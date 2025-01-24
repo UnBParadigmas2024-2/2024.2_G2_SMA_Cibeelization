@@ -40,9 +40,10 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 
 | Módulo    | Interação                                       | Responsável(eis) |
 | --------- | ----------------------------------------------- | ---------------- |
-| Rainha    | Criação de novas abelhas | Bruno Martins e Lucas Felipe |
-| Operárias | Produção de mel/Geleia Real | Bruno Martins e Lucas Felipe |
+| Rainha    | Criação de novas abelhas | Bruno Martins e Lucas Soares |
+| Operárias | Produção de mel/Geleia Real | Bruno Martins e Lucas Soares |
 | Operárias | Combate a intrusos |  |
+| Limpadora | Limpa o resíduo gerado por abelhas operárias na produção de mel e geléia real | Bruno Martins, Igor Penha e Lucas Soares |
 | Intruso   | Aparição periódica e interação com as operárias | Heitor Marques e José Luis |
 | Zangão    | Gera Operárias junto com a rainha periodicamente |  |
 
@@ -114,4 +115,4 @@ Este projeto oferece uma excelente oportunidade para explorar o paradigma multia
 | Versão | Data       | Descrição      |                       Autor                        |                      Revisor                       |
 | :----: | ---------- | -------------- | :------------------------------------------------: | :------------------------------------------------: |
 | `1.0`  | 09/01/2025 | Versão inicial | [Zenilda Vieira](https://github.com/zenildavieira) | [Raquel Eucaria](https://github.com/raqueleucaria) |
-| `2.0`  | 22/01/2025 | remove base que saiu do trabalho e adiciona requisitos atuais | [Lucas Felipe](https://github.com/lucasfs1007) | |
+| `2.0`  | 22/01/2025 | remove base que saiu do trabalho e adiciona requisitos atuais | [Lucas Soares](https://github.com/lucasfs1007) | |
