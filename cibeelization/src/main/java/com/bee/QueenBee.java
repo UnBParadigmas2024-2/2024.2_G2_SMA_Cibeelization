@@ -55,7 +55,7 @@ public class QueenBee extends Agent {
             @Override
             protected void onTick() {
                 queenBeeNumber--;
-                System.out.println("Morreu de velhice");
+                System.out.println("Morreu de velhice " + getLocalName());
                 doDelete();
             }
         });
