@@ -20,15 +20,13 @@ public class WorkerBee extends Agent {
 
     private final Random random = new Random();
     private final double chanceOfDying = 0.5;
-    private final double chanceOfRoyalJelly = 0.95;
-    private final int minRequiredforHoney = 2;
-    private final int minRequeredForRoyalJelly = 7;
-    
+    private final double chanceOfRoyalJelly = 0.1; 
+    private final int minRequiredForHoney = 2;
+    private final int minRequiredForRoyalJelly = 7;
     private static int quantityOfPollen = 0;
     private static int quantityOfHoney = 0;
     private static int quantityOfRoyalJelly = 0;
-    private int eatenRoyalJelly = 0;
-    
+
     @Override
     protected void setup() {
         System.out.println("Nova operária nascida! " + getLocalName());
@@ -101,6 +99,7 @@ public class WorkerBee extends Agent {
         System.out.println("Operária " + getLocalName() + " saiu para coletar pólen");
         doWait(2000);
 
+
         if (random.nextDouble() < -1) {
             System.out.println("Operária " + getLocalName() + " morreu por conta do inseticida!");
 
@@ -122,25 +121,31 @@ public class WorkerBee extends Agent {
     }
 
     private void makeHoneyOrRoyalJelly() {
-        // System.out.println("Operária " + getLocalName() + " irá começar a produzir algo...");
-        // doWait(2000);
+        System.out.println("Operária " + getLocalName() + " está tentando produzir algo...");
+        doWait(2000);
+        if (quantityOfPollen >= minRequiredForRoyalJelly && random.nextDouble() <= chanceOfRoyalJelly) {
+            // produzir geleia real
+            quantityOfPollen -= minRequiredForRoyalJelly;
+            quantityOfRoyalJelly++;
+            System.out.println("Operária " + getLocalName() + " produziu geleia real! Geleias totais: " + quantityOfRoyalJelly);
 
-        // if (random.nextDouble() <= chanceOfRoyalJelly) {
-        //     // if(quantityOfPollen >= )
-        //     System.out.println("Operária " + getLocalName() + " produziu mais mel!");
+            ACLMessage report = new ACLMessage(ACLMessage.INFORM);
+            report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
+            report.setContent("Royal jelly produced");
+            send(report);
+        } else if (quantityOfPollen >= minRequiredForHoney) {
+            // produzir mel
+            quantityOfPollen -= minRequiredForHoney;
+            quantityOfHoney++;
+            System.out.println("Operária " + getLocalName() + " produziu mel! Mel total: " + quantityOfHoney);
 
-        //     ACLMessage makeSuccessMsg = new ACLMessage(ACLMessage.INFORM);
-        //     deathMsg.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
-        //     deathMsg.setContent("A operária " + getLocalName() + " produziu mais mel!");
-        //     send(makeSuccessMsg);
-        // } else {
-        //     System.out.println("Operária " + getLocalName() + " produziu mais geléia real!");
-
-        //     ACLMessage makeSuccessMsg = new ACLMessage(ACLMessage.INFORM);
-        //     deathMsg.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
-        //     deathMsg.setContent("A operária " + getLocalName() + " produziu mais geléia real!");
-        //     send(makeSuccessMsg);
-        // }
+            ACLMessage report = new ACLMessage(ACLMessage.INFORM);
+            report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
+            report.setContent("Honey produced");
+            send(report);
+        } else {
+            System.out.println("Operária " + getLocalName() + " não conseguiu produzir por falta de pólen.");
+        }
     }
 
     private void processMessage(ACLMessage msg) {

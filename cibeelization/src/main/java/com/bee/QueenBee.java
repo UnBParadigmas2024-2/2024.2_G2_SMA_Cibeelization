@@ -2,7 +2,6 @@ package com.bee;
 
 import java.util.Random;
 import java.lang.Thread;
-
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
@@ -74,7 +73,6 @@ public class QueenBee extends Agent {
             }
         }
         );
-
     }
 
     private void createWorkerBee() {
