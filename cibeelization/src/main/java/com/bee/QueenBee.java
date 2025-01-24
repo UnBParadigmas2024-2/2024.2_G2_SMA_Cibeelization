@@ -21,6 +21,7 @@ public class QueenBee extends Agent {
     public static int queenBeeId = 1;
     public static int workerBeeId = 1;
     public static int droneBeeId = 1;
+    public static int janitorBeeId = 1;
     private final Random random = new Random();
     
     @Override
@@ -55,7 +56,7 @@ public class QueenBee extends Agent {
             @Override
             protected void onTick() {
                 queenBeeNumber--;
-                System.out.println("Morreu de velhice");
+                System.out.println("Morreu de velhice " + getLocalName());
                 doDelete();
             }
         });
@@ -73,6 +74,13 @@ public class QueenBee extends Agent {
             }
         }
         );
+
+        addBehaviour(new TickerBehaviour(this, 7000) {
+            @Override
+            protected void onTick() {
+                createJanitorBee();
+            }
+        });
     }
 
     private void createWorkerBee() {
@@ -100,6 +108,21 @@ public class QueenBee extends Agent {
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.setContent("Bem-vindo à colmeia!");
             msg.addReceiver(new AID(droneName, AID.ISLOCALNAME));
+            send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createJanitorBee() {
+        try {
+            String janitorName = "Limpadora" + janitorBeeId++;
+            getContainerController().createNewAgent(janitorName, "com.bee.JanitorBee", null).start();
+            System.out.println("A " + getLocalName() + " criou uma nova limpadora: " + janitorName);
+
+            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+            msg.setContent("Bem-vindo à colmeia!");
+            msg.addReceiver(new AID(janitorName, AID.ISLOCALNAME));
             send(msg);
         } catch (Exception e) {
             e.printStackTrace();

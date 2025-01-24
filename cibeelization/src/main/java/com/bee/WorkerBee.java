@@ -21,11 +21,11 @@ public class WorkerBee extends Agent {
     private final Random random = new Random();
     private final double chanceOfDying = 0.5;
     private final double chanceOfRoyalJelly = 0.1; 
-    private final int minRequiredForHoney = 2;
-    private final int minRequiredForRoyalJelly = 7;
+    private final int minRequiredForHoney = 10;
+    private final int minRequiredForRoyalJelly = 10;
     private static int quantityOfPollen = 0;
     private static int quantityOfHoney = 0;
-    private static int quantityOfRoyalJelly = 0;
+    private static int quantityOfRoyalJelly = 100;
     private int eatenRoyalJelly = 0;
 
     @Override
@@ -35,19 +35,23 @@ public class WorkerBee extends Agent {
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
-                ACLMessage msg = myAgent.receive();
-        
-                if (msg != null) {
-                    //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
-                    processMessage(msg);
-                    // if ("Collect pollen".equalsIgnoreCase(msg.getContent())) {
-                    //     collectPollen();
-                    // }
-                } else {
-                    if(Math.random() < 0.5) {
-                        collectPollen();
+                if(QueenBee.queenBeeNumber > 0){
+                    ACLMessage msg = myAgent.receive();
+            
+                    if (msg != null) {
+                        //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
+                        processMessage(msg);
+                        // if ("Collect pollen".equalsIgnoreCase(msg.getContent())) {
+                        //     collectPollen();
+                        // }
+                    } else {
+                        if(Math.random() < 0.5) {
+                            collectPollen();
+                        }
+                        block();
                     }
-                    block();
+                    collectPollen();
+                    makeHoneyOrRoyalJelly();
                 }
             }
         }
@@ -56,20 +60,12 @@ public class WorkerBee extends Agent {
             addBehaviour(new CyclicBehaviour() {
                 @Override
                 public void action() {
-                    if(QueenBee.queenBeeNumber == 0){
+                    if(QueenBee.queenBeeNumber == 0 && quantityOfRoyalJelly > 20){
                         eatRoyalJelly();
-                        if(eatenRoyalJelly >= 100){
+                        if(eatenRoyalJelly >= 10){
                             try{
                                 Thread.sleep(500);
-                                QueenBee.queenBeeNumber++;
-                                try{
-                                    String queenName = "QueenBee" + QueenBee.queenBeeId++;
-                                    getContainerController().createNewAgent(queenName, "com.bee.QueenBee", null).start();
-                                    System.out.println("A abelha operária virou uma nova rainha: ");
-                                } 
-                                catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                newQueen();
                     
                                 doDelete();
                             }
@@ -84,9 +80,31 @@ public class WorkerBee extends Agent {
             );
     }
 
-    private void eatRoyalJelly(){
-        //System.out.println("Operaria " + getLocalName() + " comendo geleinha.");
-        this.eatenRoyalJelly += random.nextInt(10);
+    public synchronized void newQueen(){
+        QueenBee.queenBeeNumber++;
+        try{
+            String queenName = "QueenBee" + QueenBee.queenBeeId++;
+            getContainerController().createNewAgent(queenName, "com.bee.QueenBee", null).start();
+            System.out.println("A abelha operária virou uma nova rainha: ");
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public synchronized void eatRoyalJelly(){
+        System.out.println("Operaria " + getLocalName() + " comendo geleinha.");
+        int amnt = random.nextInt(10);
+        if(amnt > quantityOfRoyalJelly){
+            amnt  = quantityOfRoyalJelly;
+            this.quantityOfRoyalJelly = 0;
+            this.eatenRoyalJelly += amnt;    
+        }
+        else{
+            this.quantityOfRoyalJelly -= amnt;
+            this.eatenRoyalJelly += amnt;
+        }
+
         try{
             Thread.sleep(50);
         }
@@ -121,10 +139,11 @@ public class WorkerBee extends Agent {
         }
     }
 
-    private void makeHoneyOrRoyalJelly() {
+    private  synchronized void makeHoneyOrRoyalJelly() {
         System.out.println("Operária " + getLocalName() + " está tentando produzir algo...");
+        System.out.println("Polen = " + quantityOfPollen);
         doWait(2000);
-        if (quantityOfPollen >= minRequiredForRoyalJelly && random.nextDouble() <= chanceOfRoyalJelly) {
+        if (quantityOfPollen >= minRequiredForRoyalJelly && random.nextDouble() <= 1.0) {
             // produzir geleia real
             quantityOfPollen -= minRequiredForRoyalJelly;
             quantityOfRoyalJelly++;
@@ -134,7 +153,8 @@ public class WorkerBee extends Agent {
             report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
             report.setContent("Royal jelly produced");
             send(report);
-        } else if (quantityOfPollen >= minRequiredForHoney) {
+        } 
+        if (quantityOfPollen >= minRequiredForHoney && random.nextDouble() <= 1.0) {
             // produzir mel
             quantityOfPollen -= minRequiredForHoney;
             quantityOfHoney++;
@@ -144,9 +164,9 @@ public class WorkerBee extends Agent {
             report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
             report.setContent("Honey produced");
             send(report);
-        } else {
-            System.out.println("Operária " + getLocalName() + " não conseguiu produzir por falta de pólen.");
-        }
+        }// else {
+          //  System.out.println("Operária " + getLocalName() + " não conseguiu produzir por falta de pólen.");
+        //}
     }
 
     private void processMessage(ACLMessage msg) {
