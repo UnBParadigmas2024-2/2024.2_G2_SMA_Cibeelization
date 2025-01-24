@@ -40,10 +40,11 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 
 | Módulo    | Interação                                       | Responsável(eis) |
 | --------- | ----------------------------------------------- | ---------------- |
-| Rainha    | Criação e comunicação de novas larvas           |  Bruno Martins e Lucas Felipe   |
-| Operárias | Produção de mel/Geleia Real e combate a intrusos            |                  |
+| Rainha    | Criação de novas abelhas | Bruno Martins e Lucas Felipe |
+| Operárias | Produção de mel/Geleia Real | Bruno Martins e Lucas Felipe |
+| Operárias | Combate a intrusos |  |
 | Intruso   | Aparição periódica e interação com as operárias | Heitor Marques e José Luis |
-| Zangão    |Gera Operárias junto com a rainha periodicamente  | |
+| Zangão    | Gera Operárias junto com a rainha periodicamente |  |
 
 
 ### Regras de interação entre agentes
