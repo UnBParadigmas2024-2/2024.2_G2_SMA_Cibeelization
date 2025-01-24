@@ -25,7 +25,7 @@ public class WorkerBee extends Agent {
     private final int minRequiredForRoyalJelly = 10;
     private static int quantityOfPollen = 0;
     private static int quantityOfHoney = 0;
-    private static int quantityOfRoyalJelly = 100;
+    private static int quantityOfRoyalJelly = 50;
     private int eatenRoyalJelly = 0;
 
     @Override
@@ -35,7 +35,7 @@ public class WorkerBee extends Agent {
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
-                if(QueenBee.queenBeeNumber > 0){
+                if(QueenBee.queenBeeNumber >= 0){
                     ACLMessage msg = myAgent.receive();
             
                     if (msg != null) {
@@ -143,7 +143,10 @@ public class WorkerBee extends Agent {
         System.out.println("Operária " + getLocalName() + " está tentando produzir algo...");
         System.out.println("Polen = " + quantityOfPollen);
         doWait(2000);
-        if (quantityOfPollen >= minRequiredForRoyalJelly && random.nextDouble() <= 1.0) {
+
+        double randomChanceForJelly = random.nextDouble();
+
+        if (quantityOfPollen >= minRequiredForRoyalJelly && randomChanceForJelly <= 0.4) {
             // produzir geleia real
             quantityOfPollen -= minRequiredForRoyalJelly;
             quantityOfRoyalJelly++;
@@ -153,8 +156,7 @@ public class WorkerBee extends Agent {
             report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
             report.setContent("Royal jelly produced");
             send(report);
-        } 
-        if (quantityOfPollen >= minRequiredForHoney && random.nextDouble() <= 1.0) {
+        } else if (quantityOfPollen >= minRequiredForHoney) {
             // produzir mel
             quantityOfPollen -= minRequiredForHoney;
             quantityOfHoney++;
@@ -164,9 +166,9 @@ public class WorkerBee extends Agent {
             report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
             report.setContent("Honey produced");
             send(report);
-        }// else {
-          //  System.out.println("Operária " + getLocalName() + " não conseguiu produzir por falta de pólen.");
-        //}
+        }else {
+            System.out.println("Operária " + getLocalName() + " não conseguiu produzir por falta de pólen.");
+        }
     }
 
     private void processMessage(ACLMessage msg) {
