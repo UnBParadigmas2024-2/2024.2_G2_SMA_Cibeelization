@@ -139,7 +139,7 @@ public class WorkerBee extends Agent {
         }
     }
 
-    private  synchronized void makeHoneyOrRoyalJelly() {
+    private synchronized void makeHoneyOrRoyalJelly() {
         System.out.println("Operária " + getLocalName() + " está tentando produzir algo...");
         System.out.println("Polen = " + quantityOfPollen);
         doWait(2000);
@@ -147,26 +147,38 @@ public class WorkerBee extends Agent {
         double randomChanceForJelly = random.nextDouble();
 
         if (quantityOfPollen >= minRequiredForRoyalJelly && randomChanceForJelly <= 0.4) {
-            // produzir geleia real
-            quantityOfPollen -= minRequiredForRoyalJelly;
-            quantityOfRoyalJelly++;
-            System.out.println("Operária " + getLocalName() + " produziu geleia real! Geleias totais: " + quantityOfRoyalJelly);
-
-            ACLMessage report = new ACLMessage(ACLMessage.INFORM);
-            report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
-            report.setContent("Royal jelly produced");
-            send(report);
+            if (JanitorBee.residual < 3) {
+                // produzir geleia real
+                quantityOfPollen -= minRequiredForRoyalJelly;
+                quantityOfRoyalJelly++;
+                System.out.println("Operária " + getLocalName() + " produziu geleia real! Geleias totais: " + quantityOfRoyalJelly);
+    
+                ACLMessage report = new ACLMessage(ACLMessage.INFORM);
+                report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
+                report.setContent("Royal jelly produced");
+                JanitorBee.residual += 2;
+                System.out.println("gerando + 2 de residuo");
+                send(report);
+            } else {
+                System.out.println("tem mt residuo pra geleia real");
+            }
         } else if (quantityOfPollen >= minRequiredForHoney) {
-            // produzir mel
-            quantityOfPollen -= minRequiredForHoney;
-            quantityOfHoney++;
-            System.out.println("Operária " + getLocalName() + " produziu mel! Mel total: " + quantityOfHoney);
-
-            ACLMessage report = new ACLMessage(ACLMessage.INFORM);
-            report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
-            report.setContent("Honey produced");
-            send(report);
-        }else {
+            if (JanitorBee.residual < 2) {
+                // produzir mel
+                quantityOfPollen -= minRequiredForHoney;
+                quantityOfHoney++;
+                System.out.println("Operária " + getLocalName() + " produziu mel! Mel total: " + quantityOfHoney);
+    
+                ACLMessage report = new ACLMessage(ACLMessage.INFORM);
+                report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
+                report.setContent("Honey produced");
+                JanitorBee.residual += 1;
+                System.out.println("gerando + 1 de residuo");
+                send(report);
+            } else {
+                System.out.println("mt residuo pra mel");
+            }
+        } else {
             System.out.println("Operária " + getLocalName() + " não conseguiu produzir por falta de pólen.");
         }
     }

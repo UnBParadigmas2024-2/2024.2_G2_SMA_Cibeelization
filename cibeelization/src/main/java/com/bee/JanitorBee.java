@@ -2,9 +2,13 @@ package com.bee;
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 
 public class JanitorBee extends Agent {
+
+    public static int residual = 0;
+
     @Override
     protected void setup() {
         System.out.println("Nova limpadora nascida: " + getLocalName());
@@ -17,7 +21,20 @@ public class JanitorBee extends Agent {
                     //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
                     processMessage(msg);
                 } else {
+                    cleanHive();
                     block();
+                }
+            }
+        });
+    }
+
+    protected void cleanHive() {
+        addBehaviour(new CyclicBehaviour() {
+            @Override
+            public void action() {
+                if (residual > 0) {
+                    residual--;
+                    System.out.println("Limpando. Resíduo = " + residual);
                 }
             }
         });
