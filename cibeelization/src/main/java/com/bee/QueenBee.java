@@ -1,5 +1,7 @@
 package com.bee;
 
+import java.util.Random;
+import java.lang.Thread;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
@@ -15,6 +17,11 @@ import java.util.List;
 
 public class QueenBee extends Agent {
     static int workerBeeNumber = 0;
+    public static int queenBeeNumber = 1;
+    public static int queenBeeId = 1;
+    public static int workerBeeId = 1;
+    public static int droneBeeId = 1;
+    private final Random random = new Random();
     
     @Override
     protected void setup() {
@@ -24,23 +31,56 @@ public class QueenBee extends Agent {
         addBehaviour(new OneShotBehaviour() {
             @Override
             public void action() {
-                createDroneBee();
+                try{
+                    Thread.sleep(1000);
+                }
+                catch(InterruptedException e){
+                    System.err.println("A thread foi interrompida: " + e.getMessage());
+                    Thread.currentThread().interrupt();                
+                }     
+                if(queenBeeNumber == 1)
+                    createDroneBee();
             }
         });
         
         addBehaviour(new TickerBehaviour(this, 3000) {
             @Override
             protected void onTick() {
-                createWorkerBee();
+                if(queenBeeNumber == 1)
+                    createWorkerBee();
             }
         });
+
+        addBehaviour(new TickerBehaviour(this, 10000) {
+            @Override
+            protected void onTick() {
+                queenBeeNumber--;
+                System.out.println("Morreu de velhice");
+                doDelete();
+            }
+        });
+
+        addBehaviour(new TickerBehaviour(this, 100) {
+            @Override
+            public void onTick() {
+                if(queenBeeNumber > 1){
+                    if(random.nextDouble() < 0.5){
+                        System.out.println("Morreu rainha " + getLocalName() + " na rinha");
+                        queenBeeNumber--;
+                        doDelete();
+                    }
+                }
+            }
+        }
+        );
     }
 
     private void createWorkerBee() {
         try {
-            String workerName = "Operária" + workerBeeNumber++;
+            String workerName = "Operária" + workerBeeId++;
+            workerBeeNumber++;
             getContainerController().createNewAgent(workerName, "com.bee.WorkerBee", null).start();
-            System.out.println("A abelha rainha criou uma nova operária: " + workerName);
+            System.out.println("A " + getLocalName() + " criou uma nova operária: " + workerName);
 
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.setContent("Bem-vinda à colmeia!");
@@ -53,9 +93,9 @@ public class QueenBee extends Agent {
 
     private void createDroneBee() {
         try {
-            String droneName = "Zangão";
+            String droneName = "Zangão" + droneBeeId++;
             getContainerController().createNewAgent(droneName, "com.bee.DroneBee", null).start();
-            System.out.println("A abelha rainha criou um novo zangão: " + droneName);
+            System.out.println("A " + getLocalName() + " criou um novo zangão: " + droneName);
 
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.setContent("Bem-vindo à colmeia!");
@@ -88,6 +128,6 @@ public class QueenBee extends Agent {
         } catch (FIPAException e) {
             e.printStackTrace();
         }
-        System.out.println("A abelha rainha " + getLocalName() + " irá morrer");
+        //System.out.println("A abelha rainha " + getLocalName() + " irá morrer");
     }
 }
