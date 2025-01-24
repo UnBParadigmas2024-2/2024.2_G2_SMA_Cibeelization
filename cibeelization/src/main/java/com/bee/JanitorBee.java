@@ -2,12 +2,16 @@ package com.bee;
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class DroneBee extends Agent {
+public class JanitorBee extends Agent {
+
+    public static int residual = 0;
+
     @Override
     protected void setup() {
-        System.out.println("Novo zangão nascido! " + getLocalName());
+        System.out.println("Nova limpadora nascida: " + getLocalName());
 
         addBehaviour(new CyclicBehaviour() {
             @Override
@@ -17,7 +21,20 @@ public class DroneBee extends Agent {
                     //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
                     processMessage(msg);
                 } else {
+                    cleanHive();
                     block();
+                }
+            }
+        });
+    }
+
+    protected void cleanHive() {
+        addBehaviour(new CyclicBehaviour() {
+            @Override
+            public void action() {
+                if (residual > 0) {
+                    residual--;
+                    System.out.println("Limpando. Resíduo = " + residual);
                 }
             }
         });
@@ -32,11 +49,11 @@ public class DroneBee extends Agent {
     }
 
     private void handleRequest(ACLMessage msg) {
-        if (msg.getContent().equalsIgnoreCase("Create DroneBee")) {
+        if (msg.getContent().equalsIgnoreCase("Create JanitorBee")) {
             //System.out.println(getLocalName() + " recebeu um pedido para criação.");
             ACLMessage reply = msg.createReply();
             reply.setPerformative(ACLMessage.INFORM);
-            reply.setContent("DroneBee created successfully.");
+            reply.setContent("JanitorBee created successfully.");
             send(reply);
         } else {
             //System.out.println(getLocalName() + " recebeu um pedido desconhecido: " + msg.getContent());
@@ -45,6 +62,6 @@ public class DroneBee extends Agent {
 
     @Override
     protected void takeDown() {
-        System.out.println("O zangão " + getLocalName() + " irá morrer");
+        System.out.println("A limpadora " + getLocalName() + " irá morrer");
     }
 }
