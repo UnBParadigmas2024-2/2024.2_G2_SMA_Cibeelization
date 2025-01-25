@@ -12,7 +12,7 @@ public class JanitorBee extends Agent {
 
     @Override
     protected void setup() {
-        System.out.println("Nova limpadora nascida: " + getLocalName());
+        //System.out.println("Nova limpadora nascida: " + getLocalName());
 
         addBehaviour(new CyclicBehaviour() {
             @Override
@@ -36,7 +36,7 @@ public class JanitorBee extends Agent {
         addBehaviour(new TickerBehaviour(this, 15000) {
             @Override
             protected void onTick() {
-                System.out.println("A limpadora " + getLocalName() + " morreu de velhice");
+                //System.out.println("A limpadora " + getLocalName() + " morreu de velhice");
                 doDelete();
             }
         });
@@ -45,11 +45,11 @@ public class JanitorBee extends Agent {
     protected synchronized void eat() {
         if (WorkerBee.quantityOfHoney > 0) {
             WorkerBee.quantityOfHoney--;
-            System.out.println("A limpadora " + getLocalName() + " consumiu 1 unidade do mel");
+            //System.out.println("A limpadora " + getLocalName() + " consumiu 1 unidade do mel");
             mortePorFome = 0;
         } 
         else {
-            System.out.println("A limpadora " + getLocalName() + " passou de fome");
+            //System.out.println("A limpadora " + getLocalName() + " passou de fome");
             mortePorFome++;
             doWait(1000);
         }
@@ -64,7 +64,7 @@ public class JanitorBee extends Agent {
             public void action() {
                 if (residual > 0) {
                     residual--;
-                    System.out.println("Limpando. Resíduo = " + residual);
+                    //System.out.println("Limpando. Resíduo = " + residual);
                 }
             }
         });
@@ -88,7 +88,8 @@ public class JanitorBee extends Agent {
     }
 
     @Override
-    protected void takeDown() {
-        System.out.println("A limpadora " + getLocalName() + " irá morrer");
+    protected synchronized void takeDown() {
+        //System.out.println("A limpadora " + getLocalName() + " irá morrer");
+        QueenBee.janitorBeenumber--;
     }
 }
