@@ -25,7 +25,7 @@ public class WorkerBee extends Agent {
     private final int minRequiredForHoney = 5;
     private final int minRequiredForRoyalJelly = 5;
     private static int quantityOfPollen = 0;
-    private static int quantityOfHoney = 0;
+    public static int quantityOfHoney = 0;
     private static int quantityOfRoyalJelly = 50;
     private int eatenRoyalJelly = 0;
     private int mortePorFome = 0;

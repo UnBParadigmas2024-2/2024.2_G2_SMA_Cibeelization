@@ -8,6 +8,7 @@ import jade.lang.acl.ACLMessage;
 public class JanitorBee extends Agent {
 
     public static int residual = 0;
+    public boolean firstCicle = true;
 
     @Override
     protected void setup() {
@@ -22,10 +23,46 @@ public class JanitorBee extends Agent {
                     processMessage(msg);
                 } else {
                     cleanHive();
+                    eat();
+                    dieForAge();
                     block();
                 }
             }
         });
+
+        addBehaviour(new TickerBehaviour(this, 20000) {
+            @Override
+            protected void onTick() {
+                if (firstCicle) {
+                    System.out.println("primeiro ciclo");
+                    firstCicle = !firstCicle;
+                } else eat();
+            }
+        });
+    }
+
+    protected void dieForAge() {
+        addBehaviour(new TickerBehaviour(this, 15000) {
+            @Override
+            protected void onTick() {
+                System.out.println("A limpadora " + getLocalName() + " morreu de velhice");
+                doDelete();
+            }
+        });
+    }
+
+    protected synchronized void eat() {
+        if(!firstCicle) {
+            if (WorkerBee.quantityOfHoney > 0) {
+                WorkerBee.quantityOfHoney--;
+                System.out.println("A limpadora " + getLocalName() + " consumiu 1 unidade do mel");
+            } else {
+                System.out.println("A limpadora " + getLocalName() + " morreu de fome");
+                doDelete();
+            }    
+        } else {
+            firstCicle = false;
+        }
     }
 
     protected void cleanHive() {
