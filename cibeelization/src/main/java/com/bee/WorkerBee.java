@@ -32,7 +32,7 @@ public class WorkerBee extends Agent {
 
     @Override
     protected void setup() {
-        System.out.println("Nova operária nascida! " + getLocalName());
+        System.out.println("[" + getLocalName() + "] nasceu");
 
         addBehaviour(new CyclicBehaviour() {
             @Override
@@ -41,11 +41,7 @@ public class WorkerBee extends Agent {
                     ACLMessage msg = myAgent.receive();
             
                     if (msg != null) {
-                        //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
                         processMessage(msg);
-                        // if ("Collect pollen".equalsIgnoreCase(msg.getContent())) {
-                        //     collectPollen();
-                        // }
                     } else {
                         if(Math.random() < 0.5) {
                             collectPollen();
@@ -90,18 +86,18 @@ public class WorkerBee extends Agent {
 
     public synchronized void eatHoney(){
         if(quantityOfHoney == 0){
-            System.out.println("Operaria " + getLocalName() + " com fome.");
+            System.out.println("[" + getLocalName() + "] está com fome");
             mortePorFome++;
             doWait(1000);
         }
         else{
-            System.out.println("Operaria " + getLocalName() + " comendo mel.");
+            System.out.println("[" + getLocalName() + "] comendo mel.");
             quantityOfHoney--;
             mortePorFome = 0;
         }
 
         if(mortePorFome == 3){
-            System.out.println("Operaria " + getLocalName() + " morreu de fome");
+            System.out.println("[" + getLocalName() + "] morreu de fome");
             doDelete();
         }
     }
@@ -111,7 +107,7 @@ public class WorkerBee extends Agent {
         try{
             String queenName = "QueenBee" + QueenBee.queenBeeId++;
             getContainerController().createNewAgent(queenName, "com.bee.QueenBee", null).start();
-            System.out.println("A abelha operária virou uma nova rainha: ");
+            System.out.println("[" + getLocalName() + "] virou a nova rainha");
         } 
         catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +115,7 @@ public class WorkerBee extends Agent {
     }
 
     public synchronized void eatRoyalJelly(){
-        System.out.println("Operaria " + getLocalName() + " comendo geleinha.");
+        System.out.println("[" + getLocalName() + "] comendo geleia.");
         int amnt = random.nextInt(10);
         if(quantityOfRoyalJelly > 0)
             mortePorFome = 0;
@@ -145,12 +141,12 @@ public class WorkerBee extends Agent {
     }
 
     private void collectPollen() {
-        System.out.println("Operária " + getLocalName() + " saiu para coletar pólen");
+        System.out.println("[" + getLocalName() + "] saiu para coletar pólen");
         doWait(2000);
 
 
         if (random.nextDouble() < -1) {
-            System.out.println("Operária " + getLocalName() + " morreu por conta do inseticida!");
+            System.out.println("[" + getLocalName() + "] morreu pelo inseticida!");
 
             ACLMessage deathMsg = new ACLMessage(ACLMessage.INFORM);
             deathMsg.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
@@ -159,7 +155,7 @@ public class WorkerBee extends Agent {
 
             doDelete();
         } else {
-            System.out.println("A operária " + getLocalName() + " acabou de retornar para a colméia!");
+            System.out.println("[" + getLocalName() + "] retornou para a colméia");
             quantityOfPollen++;
 
             ACLMessage report = new ACLMessage(ACLMessage.INFORM);
@@ -170,8 +166,7 @@ public class WorkerBee extends Agent {
     }
 
     private synchronized void makeHoneyOrRoyalJelly() {
-        System.out.println("Operária " + getLocalName() + " está tentando produzir algo...");
-        System.out.println("Polen = " + quantityOfPollen);
+        System.out.println("[" + getLocalName() + "] produzindo algo");
         doWait(2000);
 
         double randomChanceForJelly = random.nextDouble();
@@ -181,41 +176,39 @@ public class WorkerBee extends Agent {
                 // produzir geleia real
                 quantityOfPollen -= minRequiredForRoyalJelly;
                 quantityOfRoyalJelly++;
-                System.out.println("Operária " + getLocalName() + " produziu geleia real! Geleias totais: " + quantityOfRoyalJelly);
+                System.out.println("[" + getLocalName() + "] produziu geleia real");
     
                 ACLMessage report = new ACLMessage(ACLMessage.INFORM);
                 report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
                 report.setContent("Royal jelly produced");
                 JanitorBee.residual += 2;
-                System.out.println("gerando + 2 de residuo");
                 send(report);
             } else {
-                System.out.println("tem mt residuo pra geleia real");
+                System.out.println("[Colmeia] Muito resíduo para a produção de geleia real");
             }
         } else if (quantityOfPollen >= minRequiredForHoney) {
             if (JanitorBee.residual < 2) {
                 // produzir mel
                 quantityOfPollen -= minRequiredForHoney;
                 quantityOfHoney++;
-                System.out.println("Operária " + getLocalName() + " produziu mel! Mel total: " + quantityOfHoney);
+                System.out.println("[" + getLocalName() + "] produziu mel");
     
                 ACLMessage report = new ACLMessage(ACLMessage.INFORM);
                 report.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));
                 report.setContent("Honey produced");
                 JanitorBee.residual += 1;
-                System.out.println("gerando + 1 de residuo");
                 send(report);
             } else {
-                System.out.println("mt residuo pra mel");
+                System.out.println("[Colmeia] Muito resíduo para a produção de mel");
             }
         } else {
-            System.out.println("Operária " + getLocalName() + " não conseguiu produzir por falta de pólen.");
+            System.out.println("[" + getLocalName() + "] não produziu por falta de pólen");
         }
     }
 
     private void processMessage(ACLMessage msg) {
         if (msg.getPerformative() == ACLMessage.INFORM) {
-            //System.out.println(getLocalName() + " recebeu uma mensagem informativa: " + msg.getContent());
+    
         } else if (msg.getPerformative() == ACLMessage.REQUEST) {
             handleRequest(msg);
         }
@@ -223,18 +216,15 @@ public class WorkerBee extends Agent {
 
     private void handleRequest(ACLMessage msg) {
         if (msg.getContent().equalsIgnoreCase("Create WorkerBee")) {
-            //System.out.println(getLocalName() + " recebeu um pedido para criação.");
             ACLMessage reply = msg.createReply();
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent("WorkerBee created successfully.");
             send(reply);
-        } else {
-            //System.out.println(getLocalName() + " recebeu um pedido desconhecido: " + msg.getContent());
         }
     }
 
     @Override
     protected void takeDown() {
-        System.out.println("A operária " + getLocalName() + " irá morrer");
+        System.out.println("[" + getLocalName() + "] morreu");
     }
 }

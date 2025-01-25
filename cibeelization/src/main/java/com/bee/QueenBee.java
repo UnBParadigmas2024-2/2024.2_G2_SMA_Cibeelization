@@ -55,7 +55,7 @@ public class QueenBee extends Agent {
             @Override
             protected void onTick() {
                 queenBeeNumber--;
-                System.out.println("Morreu de velhice " + getLocalName());
+                System.out.println("[" + getLocalName() + "] morreu por idade");
                 doDelete();
             }
         });
@@ -65,7 +65,7 @@ public class QueenBee extends Agent {
             public void onTick() {
                 if(queenBeeNumber > 1){
                     if(random.nextDouble() < 0.5){
-                        System.out.println("Morreu rainha " + getLocalName() + " na rinha");
+                        System.out.println("[" + getLocalName() + "] morreu na rinha");
                         queenBeeNumber--;
                         doDelete();
                     }
@@ -85,7 +85,7 @@ public class QueenBee extends Agent {
     private void chamaZangao(){
         String zangao = "Zangao" + ordemAcasalamento;
         try{
-            System.out.println("Chamou " + zangao + " para voo nupicial");
+            System.out.println("[" + getLocalName() + "] chamou " + zangao + " para voo nupcial");
             ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
             msg.setContent("Venha");
             msg.addReceiver(new AID(zangao, AID.ISLOCALNAME));
@@ -114,7 +114,6 @@ public class QueenBee extends Agent {
             String workerName = "Operária" + workerBeeId++;
             workerBeeNumber++;
             getContainerController().createNewAgent(workerName, "com.bee.WorkerBee", null).start();
-            System.out.println("A " + getLocalName() + " criou uma nova operária: " + workerName);
 
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.setContent("Bem-vinda à colmeia!");
@@ -129,7 +128,6 @@ public class QueenBee extends Agent {
         try {
             String droneName = "Zangao" + droneBeeId++;
             getContainerController().createNewAgent(droneName, "com.bee.DroneBee", null).start();
-            System.out.println("A " + getLocalName() + " criou um novo zangão: " + droneName);
 
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.setContent("Bem-vindo à colmeia!");
@@ -144,8 +142,6 @@ public class QueenBee extends Agent {
         try {
             String janitorName = "Limpadora" + janitorBeeId++;
             getContainerController().createNewAgent(janitorName, "com.bee.JanitorBee", null).start();
-            System.out.println("A " + getLocalName() + " criou uma nova limpadora: " + janitorName);
-
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.setContent("Bem-vindo à colmeia!");
             msg.addReceiver(new AID(janitorName, AID.ISLOCALNAME));
@@ -177,6 +173,6 @@ public class QueenBee extends Agent {
         } catch (FIPAException e) {
             e.printStackTrace();
         }
-        //System.out.println("A abelha rainha " + getLocalName() + " irá morrer");
+        System.out.println("[" + getLocalName() + "] morreu");
     }
 }

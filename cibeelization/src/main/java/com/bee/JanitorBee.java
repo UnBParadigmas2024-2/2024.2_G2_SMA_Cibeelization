@@ -18,7 +18,6 @@ public class JanitorBee extends Agent {
             public void action() {
                 ACLMessage msg = receive();
                 if (msg != null) {
-                    //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
                     processMessage(msg);
                 } else {
                     cleanHive();
@@ -34,7 +33,7 @@ public class JanitorBee extends Agent {
             public void action() {
                 if (residual > 0) {
                     residual--;
-                    System.out.println("Limpando. Resíduo = " + residual);
+                    System.out.println("[" + getLocalName() + "] limpando resíduo");
                 }
             }
         });
@@ -42,7 +41,6 @@ public class JanitorBee extends Agent {
 
     private void processMessage(ACLMessage msg) {
         if (msg.getPerformative() == ACLMessage.INFORM) {
-            //System.out.println(getLocalName() + " recebeu uma mensagem informativa: " + msg.getContent());
         } else if (msg.getPerformative() == ACLMessage.REQUEST) {
             handleRequest(msg);
         }
@@ -50,18 +48,15 @@ public class JanitorBee extends Agent {
 
     private void handleRequest(ACLMessage msg) {
         if (msg.getContent().equalsIgnoreCase("Create JanitorBee")) {
-            //System.out.println(getLocalName() + " recebeu um pedido para criação.");
             ACLMessage reply = msg.createReply();
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent("JanitorBee created successfully.");
             send(reply);
-        } else {
-            //System.out.println(getLocalName() + " recebeu um pedido desconhecido: " + msg.getContent());
         }
     }
 
     @Override
     protected void takeDown() {
-        System.out.println("A limpadora " + getLocalName() + " irá morrer");
+        System.out.println("[" + getLocalName() + "] morreu");
     }
 }
