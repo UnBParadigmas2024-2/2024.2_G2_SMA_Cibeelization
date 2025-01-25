@@ -75,7 +75,7 @@ public class QueenBee extends Agent {
         }
         );
 
-        addBehaviour(new TickerBehaviour(this, 7000) {
+        addBehaviour(new TickerBehaviour(this, 3000) {
             @Override
             protected void onTick() {
                 createJanitorBee();

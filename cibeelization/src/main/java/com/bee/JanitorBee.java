@@ -19,7 +19,6 @@ public class JanitorBee extends Agent {
             public void action() {
                 ACLMessage msg = receive();
                 if (msg != null) {
-                    //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
                     processMessage(msg);
                 } else {
                     cleanHive();
@@ -30,19 +29,16 @@ public class JanitorBee extends Agent {
             }
         });
 
-        addBehaviour(new TickerBehaviour(this, 20000) {
+        addBehaviour(new TickerBehaviour(this, 15000) {
             @Override
             protected void onTick() {
-                if (firstCicle) {
-                    System.out.println("primeiro ciclo");
-                    firstCicle = !firstCicle;
-                } else eat();
+                eat();
             }
         });
     }
 
     protected void dieForAge() {
-        addBehaviour(new TickerBehaviour(this, 15000) {
+        addBehaviour(new TickerBehaviour(this, 30000) {
             @Override
             protected void onTick() {
                 System.out.println("A limpadora " + getLocalName() + " morreu de velhice");
@@ -79,7 +75,7 @@ public class JanitorBee extends Agent {
 
     private void processMessage(ACLMessage msg) {
         if (msg.getPerformative() == ACLMessage.INFORM) {
-            //System.out.println(getLocalName() + " recebeu uma mensagem informativa: " + msg.getContent());
+           
         } else if (msg.getPerformative() == ACLMessage.REQUEST) {
             handleRequest(msg);
         }
@@ -87,13 +83,10 @@ public class JanitorBee extends Agent {
 
     private void handleRequest(ACLMessage msg) {
         if (msg.getContent().equalsIgnoreCase("Create JanitorBee")) {
-            //System.out.println(getLocalName() + " recebeu um pedido para criação.");
             ACLMessage reply = msg.createReply();
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent("JanitorBee created successfully.");
             send(reply);
-        } else {
-            //System.out.println(getLocalName() + " recebeu um pedido desconhecido: " + msg.getContent());
         }
     }
 

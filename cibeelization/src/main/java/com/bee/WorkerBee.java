@@ -41,11 +41,7 @@ public class WorkerBee extends Agent {
                     ACLMessage msg = myAgent.receive();
             
                     if (msg != null) {
-                        //System.out.println(getLocalName() + " recebeu uma mensagem: " + msg.getContent());
                         processMessage(msg);
-                        // if ("Collect pollen".equalsIgnoreCase(msg.getContent())) {
-                        //     collectPollen();
-                        // }
                     } else {
                         if(Math.random() < 0.5) {
                             collectPollen();
@@ -141,13 +137,11 @@ public class WorkerBee extends Agent {
             System.err.println("A thread foi interrompida: " + e.getMessage());
             Thread.currentThread().interrupt();                
         }
-
     }
 
     private void collectPollen() {
         System.out.println("Operária " + getLocalName() + " saiu para coletar pólen");
         doWait(2000);
-
 
         if (random.nextDouble() < -1) {
             System.out.println("Operária " + getLocalName() + " morreu por conta do inseticida!");
@@ -215,7 +209,7 @@ public class WorkerBee extends Agent {
 
     private void processMessage(ACLMessage msg) {
         if (msg.getPerformative() == ACLMessage.INFORM) {
-            //System.out.println(getLocalName() + " recebeu uma mensagem informativa: " + msg.getContent());
+
         } else if (msg.getPerformative() == ACLMessage.REQUEST) {
             handleRequest(msg);
         }
@@ -223,13 +217,10 @@ public class WorkerBee extends Agent {
 
     private void handleRequest(ACLMessage msg) {
         if (msg.getContent().equalsIgnoreCase("Create WorkerBee")) {
-            //System.out.println(getLocalName() + " recebeu um pedido para criação.");
             ACLMessage reply = msg.createReply();
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent("WorkerBee created successfully.");
             send(reply);
-        } else {
-            //System.out.println(getLocalName() + " recebeu um pedido desconhecido: " + msg.getContent());
         }
     }
 
