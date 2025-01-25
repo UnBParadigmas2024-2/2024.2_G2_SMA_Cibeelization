@@ -8,7 +8,7 @@ import jade.lang.acl.ACLMessage;
 public class JanitorBee extends Agent {
 
     public static int residual = 0;
-    public boolean firstCicle = true;
+    private int mortePorFome = 0;
 
     @Override
     protected void setup() {
@@ -22,9 +22,6 @@ public class JanitorBee extends Agent {
                     processMessage(msg);
                 } else {
                     cleanHive();
-                    eat();
-                    dieForAge();
-                    block();
                 }
             }
         });
@@ -35,10 +32,8 @@ public class JanitorBee extends Agent {
                 eat();
             }
         });
-    }
 
-    protected void dieForAge() {
-        addBehaviour(new TickerBehaviour(this, 30000) {
+        addBehaviour(new TickerBehaviour(this, 15000) {
             @Override
             protected void onTick() {
                 System.out.println("A limpadora " + getLocalName() + " morreu de velhice");
@@ -48,16 +43,18 @@ public class JanitorBee extends Agent {
     }
 
     protected synchronized void eat() {
-        if(!firstCicle) {
-            if (WorkerBee.quantityOfHoney > 0) {
-                WorkerBee.quantityOfHoney--;
-                System.out.println("A limpadora " + getLocalName() + " consumiu 1 unidade do mel");
-            } else {
-                System.out.println("A limpadora " + getLocalName() + " morreu de fome");
-                doDelete();
-            }    
-        } else {
-            firstCicle = false;
+        if (WorkerBee.quantityOfHoney > 0) {
+            WorkerBee.quantityOfHoney--;
+            System.out.println("A limpadora " + getLocalName() + " consumiu 1 unidade do mel");
+            mortePorFome = 0;
+        } 
+        else {
+            System.out.println("A limpadora " + getLocalName() + " passou de fome");
+            mortePorFome++;
+            doWait(1000);
+        }
+        if(mortePorFome == 2){
+            doDelete(); 
         }
     }
 
