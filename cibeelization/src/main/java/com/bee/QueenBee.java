@@ -22,6 +22,7 @@ public class QueenBee extends Agent {
     public static int workerBeeId = 1;
     public static int droneBeeId = 1;
     public static int janitorBeeId = 1;
+    public static int ordemAcasalamento = 1;
     private final Random random = new Random();
     
     @Override
@@ -39,20 +40,18 @@ public class QueenBee extends Agent {
                     System.err.println("A thread foi interrompida: " + e.getMessage());
                     Thread.currentThread().interrupt();                
                 }     
-                if(queenBeeNumber == 1)
-                    createDroneBee();
             }
         });
         
-        addBehaviour(new TickerBehaviour(this, 3000) {
+        addBehaviour(new TickerBehaviour(this, 2000) {
             @Override
             protected void onTick() {
                 if(queenBeeNumber == 1)
-                    createWorkerBee();
+                    vooNupicial();
             }
         });
 
-        addBehaviour(new TickerBehaviour(this, 20000) {
+        addBehaviour(new TickerBehaviour(this, 10000) {
             @Override
             protected void onTick() {
                 queenBeeNumber--;
@@ -83,6 +82,33 @@ public class QueenBee extends Agent {
         });
     }
 
+    private void chamaZangao(){
+        String zangao = "Zangao" + ordemAcasalamento;
+        try{
+            System.out.println("Chamou " + zangao + " para voo nupicial");
+            ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+            msg.setContent("Venha");
+            msg.addReceiver(new AID(zangao, AID.ISLOCALNAME));
+            send(msg);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void vooNupicial(){
+        if(droneBeeId == ordemAcasalamento){
+            createDroneBee();
+            createDroneBee();
+            createDroneBee();
+        }
+        else{
+            chamaZangao();
+            for(int i = 0; i < 1; i++)
+                createWorkerBee();
+        }
+    }
+
     private void createWorkerBee() {
         try {
             String workerName = "Operária" + workerBeeId++;
@@ -101,7 +127,7 @@ public class QueenBee extends Agent {
 
     private void createDroneBee() {
         try {
-            String droneName = "Zangão" + droneBeeId++;
+            String droneName = "Zangao" + droneBeeId++;
             getContainerController().createNewAgent(droneName, "com.bee.DroneBee", null).start();
             System.out.println("A " + getLocalName() + " criou um novo zangão: " + droneName);
 
