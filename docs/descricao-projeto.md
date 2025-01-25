@@ -42,10 +42,10 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 | --------- | ----------------------------------------------- | ---------------- |
 | Rainha    | Criação de novas abelhas | Bruno Martins e Lucas Soares |
 | Operárias | Produção de mel/Geleia Real | Bruno Martins e Lucas Soares |
-| Operárias | Combate a intrusos |  |
+| Operárias | Combate a intrusos | Heitor Marques e José Luis |
 | Limpadora | Limpa o resíduo gerado por abelhas operárias na produção de mel e geléia real | Bruno Martins, Igor Penha e Lucas Soares |
 | Intruso   | Aparição periódica e interação com as operárias | Heitor Marques e José Luis |
-| Zangão    | Gera Operárias junto com a rainha periodicamente |  |
+| Zangão    | Gera Operárias junto com a rainha periodicamente |Raquel Eucária e Zenilda Pedrosa |
 
 
 ### Regras de interação entre agentes
