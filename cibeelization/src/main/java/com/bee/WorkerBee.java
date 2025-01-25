@@ -5,6 +5,7 @@ import java.lang.Thread;
 import java.util.concurrent.*; 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.lang.acl.ACLMessage;
 
@@ -21,12 +22,13 @@ public class WorkerBee extends Agent {
     private final Random random = new Random();
     private final double chanceOfDying = 0.5;
     private final double chanceOfRoyalJelly = 0.1; 
-    private final int minRequiredForHoney = 10;
-    private final int minRequiredForRoyalJelly = 10;
+    private final int minRequiredForHoney = 5;
+    private final int minRequiredForRoyalJelly = 5;
     private static int quantityOfPollen = 0;
     private static int quantityOfHoney = 0;
     private static int quantityOfRoyalJelly = 50;
     private int eatenRoyalJelly = 0;
+    private int mortePorFome = 0;
 
     @Override
     protected void setup() {
@@ -78,6 +80,30 @@ public class WorkerBee extends Agent {
                 }
             }
             );
+            addBehaviour(new TickerBehaviour(this, 5000) {
+            @Override
+            protected void onTick() {
+                eatHoney();
+            }
+        });
+    }
+
+    public synchronized void eatHoney(){
+        if(quantityOfHoney == 0){
+            System.out.println("Operaria " + getLocalName() + " com fome.");
+            mortePorFome++;
+            doWait(1000);
+        }
+        else{
+            System.out.println("Operaria " + getLocalName() + " comendo mel.");
+            quantityOfHoney--;
+            mortePorFome = 0;
+        }
+
+        if(mortePorFome == 3){
+            System.out.println("Operaria " + getLocalName() + " morreu de fome");
+            doDelete();
+        }
     }
 
     public synchronized void newQueen(){
@@ -95,6 +121,9 @@ public class WorkerBee extends Agent {
     public synchronized void eatRoyalJelly(){
         System.out.println("Operaria " + getLocalName() + " comendo geleinha.");
         int amnt = random.nextInt(10);
+        if(quantityOfRoyalJelly > 0)
+            mortePorFome = 0;
+        
         if(amnt > quantityOfRoyalJelly){
             amnt  = quantityOfRoyalJelly;
             this.quantityOfRoyalJelly = 0;
@@ -112,6 +141,7 @@ public class WorkerBee extends Agent {
             System.err.println("A thread foi interrompida: " + e.getMessage());
             Thread.currentThread().interrupt();                
         }
+
     }
 
     private void collectPollen() {
