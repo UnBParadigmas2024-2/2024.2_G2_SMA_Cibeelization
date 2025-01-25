@@ -25,7 +25,7 @@ public class DroneBee extends Agent {
             }
         });
 
-        addBehaviour(new TickerBehaviour(this, 5000) {
+        addBehaviour(new TickerBehaviour(this, 25000) {
             @Override
             protected void onTick() {
                 System.out.println("[" + getLocalName() + "] morreu de velhice");

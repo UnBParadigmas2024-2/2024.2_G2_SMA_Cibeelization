@@ -43,7 +43,7 @@ public class QueenBee extends Agent {
             }
         });
         
-        addBehaviour(new TickerBehaviour(this, 2000) {
+        addBehaviour(new TickerBehaviour(this, 10000) {
             @Override
             protected void onTick() {
                 if(queenBeeNumber == 1)
@@ -51,7 +51,7 @@ public class QueenBee extends Agent {
             }
         });
 
-        addBehaviour(new TickerBehaviour(this, 10000) {
+        addBehaviour(new TickerBehaviour(this, 30000) {
             @Override
             protected void onTick() {
                 queenBeeNumber--;
@@ -73,13 +73,6 @@ public class QueenBee extends Agent {
             }
         }
         );
-
-        addBehaviour(new TickerBehaviour(this, 7000) {
-            @Override
-            protected void onTick() {
-                createJanitorBee();
-            }
-        });
     }
 
     private void chamaZangao(){
@@ -98,14 +91,15 @@ public class QueenBee extends Agent {
 
     private void vooNupicial(){
         if(droneBeeId == ordemAcasalamento){
-            createDroneBee();
-            createDroneBee();
-            createDroneBee();
+            for(int i = 0; i < 3; i++)
+                createDroneBee();
         }
         else{
             chamaZangao();
-            for(int i = 0; i < 1; i++)
+            for(int i = 0; i < 6; i++)
                 createWorkerBee();
+            for(int i = 0; i < 4; i++)
+                createJanitorBee();
         }
     }
 

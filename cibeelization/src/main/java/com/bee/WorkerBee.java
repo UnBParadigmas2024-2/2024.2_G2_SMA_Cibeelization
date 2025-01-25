@@ -22,10 +22,10 @@ public class WorkerBee extends Agent {
     private final Random random = new Random();
     private final double chanceOfDying = 0.5;
     private final double chanceOfRoyalJelly = 0.1; 
-    private final int minRequiredForHoney = 5;
-    private final int minRequiredForRoyalJelly = 5;
+    private final int minRequiredForHoney = 3;
+    private final int minRequiredForRoyalJelly = 3;
     private static int quantityOfPollen = 0;
-    private static int quantityOfHoney = 0;
+    public static int quantityOfHoney = 50;
     private static int quantityOfRoyalJelly = 50;
     private int eatenRoyalJelly = 0;
     private int mortePorFome = 0;
@@ -55,31 +55,38 @@ public class WorkerBee extends Agent {
         }
         );
 
-            addBehaviour(new CyclicBehaviour() {
-                @Override
-                public void action() {
-                    if(QueenBee.queenBeeNumber == 0 && quantityOfRoyalJelly > 20){
-                        eatRoyalJelly();
-                        if(eatenRoyalJelly >= 10){
-                            try{
-                                Thread.sleep(500);
-                                newQueen();
-                    
-                                doDelete();
-                            }
-                            catch (InterruptedException e) {
-                                System.err.println("A thread foi interrompida: " + e.getMessage());
-                                Thread.currentThread().interrupt();                
-                            }
+        addBehaviour(new CyclicBehaviour() {
+            @Override
+            public void action() {
+                if(QueenBee.queenBeeNumber == 0 && quantityOfRoyalJelly > 20){
+                    eatRoyalJelly();
+                    if(eatenRoyalJelly >= 5){
+                        try{
+                            Thread.sleep(500);
+                            newQueen();
+                
+                            doDelete();
+                        }
+                        catch (InterruptedException e) {
+                            System.err.println("A thread foi interrompida: " + e.getMessage());
+                            Thread.currentThread().interrupt();                
                         }
                     }
                 }
             }
-            );
-            addBehaviour(new TickerBehaviour(this, 5000) {
+        }
+        );
+        addBehaviour(new TickerBehaviour(this, 7000) {
             @Override
             protected void onTick() {
                 eatHoney();
+            }
+        });
+        addBehaviour(new TickerBehaviour(this, 15000) {
+            @Override
+            protected void onTick() {
+                System.out.println(getLocalName() + " morreu de velhice");
+                doDelete();
             }
         });
     }
@@ -137,13 +144,11 @@ public class WorkerBee extends Agent {
             System.err.println("A thread foi interrompida: " + e.getMessage());
             Thread.currentThread().interrupt();                
         }
-
     }
 
     private void collectPollen() {
         System.out.println("[" + getLocalName() + "] saiu para coletar pólen");
         doWait(2000);
-
 
         if (random.nextDouble() < -1) {
             System.out.println("[" + getLocalName() + "] morreu pelo inseticida!");
@@ -172,7 +177,7 @@ public class WorkerBee extends Agent {
         double randomChanceForJelly = random.nextDouble();
 
         if (quantityOfPollen >= minRequiredForRoyalJelly && randomChanceForJelly <= 0.4) {
-            if (JanitorBee.residual < 3) {
+            if (JanitorBee.residual < 10) {
                 // produzir geleia real
                 quantityOfPollen -= minRequiredForRoyalJelly;
                 quantityOfRoyalJelly++;
@@ -187,7 +192,7 @@ public class WorkerBee extends Agent {
                 System.out.println("[Colmeia] Muito resíduo para a produção de geleia real");
             }
         } else if (quantityOfPollen >= minRequiredForHoney) {
-            if (JanitorBee.residual < 2) {
+            if (JanitorBee.residual < 10) {
                 // produzir mel
                 quantityOfPollen -= minRequiredForHoney;
                 quantityOfHoney++;

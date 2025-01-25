@@ -8,6 +8,7 @@ import jade.lang.acl.ACLMessage;
 public class JanitorBee extends Agent {
 
     public static int residual = 0;
+    private int mortePorFome = 0;
 
     @Override
     protected void setup() {
@@ -21,10 +22,40 @@ public class JanitorBee extends Agent {
                     processMessage(msg);
                 } else {
                     cleanHive();
-                    block();
                 }
             }
         });
+
+        addBehaviour(new TickerBehaviour(this, 15000) {
+            @Override
+            protected void onTick() {
+                eat();
+            }
+        });
+
+        addBehaviour(new TickerBehaviour(this, 15000) {
+            @Override
+            protected void onTick() {
+                System.out.println("A limpadora " + getLocalName() + " morreu de velhice");
+                doDelete();
+            }
+        });
+    }
+
+    protected synchronized void eat() {
+        if (WorkerBee.quantityOfHoney > 0) {
+            WorkerBee.quantityOfHoney--;
+            System.out.println("A limpadora " + getLocalName() + " consumiu 1 unidade do mel");
+            mortePorFome = 0;
+        } 
+        else {
+            System.out.println("A limpadora " + getLocalName() + " passou de fome");
+            mortePorFome++;
+            doWait(1000);
+        }
+        if(mortePorFome == 2){
+            doDelete(); 
+        }
     }
 
     protected void cleanHive() {
