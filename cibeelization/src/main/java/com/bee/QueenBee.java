@@ -96,7 +96,7 @@ public class QueenBee extends Agent {
         }
         else{
             chamaZangao();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 20; i++)
                 createWorkerBee();
             for(int i = 0; i < 4; i++)
                 createJanitorBee();

@@ -25,7 +25,7 @@ public class WorkerBee extends Agent {
     private final int minRequiredForHoney = 3;
     private final int minRequiredForRoyalJelly = 3;
     public static int quantityOfPollen = 0;
-    public static int quantityOfHoney = 50;
+    public static int quantityOfHoney = 10;
     public static int quantityOfRoyalJelly = 50;
     private int eatenRoyalJelly = 0;
     private int mortePorFome = 0;
@@ -61,7 +61,6 @@ public class WorkerBee extends Agent {
                 if(QueenBee.queenBeeNumber == 0 && quantityOfRoyalJelly > 20){
                     eatRoyalJelly();
                     if(eatenRoyalJelly >= 5){
-                        doWait(100);
                         newQueen();
                         doDelete();
                     }
@@ -139,12 +138,12 @@ public class WorkerBee extends Agent {
         }
     }
 
-    private void collectPollen() {
+    private synchronized void collectPollen() {
         //System.out.println("Operária " + getLocalName() + " saiu para coletar pólen");
         doWait(2000);
 
-        if (random.nextDouble() < -1) {
-            //System.out.println("Operária " + getLocalName() + " morreu por conta do inseticida!");
+        if (random.nextDouble() < 0.05) {
+            System.out.println("Operária " + getLocalName() + " morreu por conta do inseticida!");
 
             ACLMessage deathMsg = new ACLMessage(ACLMessage.INFORM);
             deathMsg.addReceiver(new jade.core.AID("BeeQueen", jade.core.AID.ISLOCALNAME));

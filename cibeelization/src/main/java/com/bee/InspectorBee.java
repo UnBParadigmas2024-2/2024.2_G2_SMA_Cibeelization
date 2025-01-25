@@ -42,6 +42,19 @@ public class InspectorBee extends Agent{
             }
         });
 
+        addBehaviour(new TickerBehaviour(this, 20000) {
+            @Override
+            protected void onTick() {
+                imposto();
+            }
+        });
+
+
+    }
+
+    public void imposto(){
+        System.out.println("A receita bateu na colmeia");
+        WorkerBee.quantityOfHoney *= 0.3;
     }
 
     public void printa_recursos(){
