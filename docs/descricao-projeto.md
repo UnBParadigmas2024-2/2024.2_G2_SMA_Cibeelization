@@ -17,6 +17,7 @@ Neste projeto, vamos simular o comportamento de uma colmeia para uma implementa�
 * Limpadoras: Limpam a colmeia de tempo e tempo, necessário para produção de mel.
 * Intruso: Aparece periodicamente e precisa ser combatido pelas operárias.
 * Zangão: Ajuda na proteção da colmeia e na reprodução com a rainha.
+* Inspetora: Aprsentação de dados da colmeia + cobraça de imposto (simulação do apicultor)
 
 ## Metodologia
 
@@ -49,6 +50,7 @@ Cada membro da equipe será responsável por desenvolver e integrar os seguintes
 | Limpadora   | Limpa o resíduo gerado por abelhas operárias na produção de mel e geléia real | Bruno Martins, Igor Penha e Lucas Soares |
 | Intruso     | Aparição periódica e interação com as operárias | Heitor Marques e José Luis |
 | Zangão      | Gera Operárias junto com a rainha periodicamente | Bruno Ribeiro, Igor Penha e Leonardo Machado |
+| Inspetora   | Criação da abelha inspetora | Igor Penha e Leonardo Machado |
 | Interface   | Criar interface | Racheal Eucária e Zenilda Pedrosa |
 
 
