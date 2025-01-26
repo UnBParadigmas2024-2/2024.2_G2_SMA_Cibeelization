@@ -1,6 +1,6 @@
 # Igor e Silva Penha - 211029352
 
-## Lições Aprendida
+## Lições Aprendidas
 
 
 

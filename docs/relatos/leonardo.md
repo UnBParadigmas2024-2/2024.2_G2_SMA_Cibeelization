@@ -1,6 +1,6 @@
 # Leonardo Gonçalves Machado - 211029405
 
-## Lições Aprendida
+## Lições Aprendidas
 
 
 

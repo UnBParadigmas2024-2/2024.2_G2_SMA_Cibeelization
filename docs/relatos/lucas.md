@@ -1,6 +1,6 @@
 # Lucas Felipe Soares - 202016767
 
-## Lições Aprendida
+## Lições Aprendidas
 
 - Acredito que apesar da dificuldade para conseguir configurar e executar o ambiente JADE, foi muito bacana poder explora-lo e ver que teríamos muita base pronta para explorar. Certamente quero explorar mais o JADE e desejo conhecer um pouco do MESA também.
 - Acho que o estilo de programação me lembrou bastante a manipulação de threads e foi algo um pouco diferente do que programo no dia dia. Achei um desafio muito legal de pensar em um agente tendo de lidar com ação-reação de outro agente.
