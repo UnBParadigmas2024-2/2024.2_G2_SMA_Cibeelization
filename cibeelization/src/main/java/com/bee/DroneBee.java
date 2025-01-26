@@ -33,6 +33,20 @@ public class DroneBee extends Agent {
                 doDelete();
             }
         });
+
+        addBehaviour(new CyclicBehaviour() {
+            @Override
+            public void action() {
+                ACLMessage msg = receive();
+                if (msg != null && msg.getContent().startsWith("KillBee: ")) {
+                    String intruderName = msg.getContent().split(": ")[1];
+                    System.out.println("Zangão " + getLocalName() + " morreu por ataque do intruso " + intruderName + "!");
+                    doDelete();
+                } else {
+                    block();
+                }
+            }
+        });
     }
 
     private void processMessage(ACLMessage msg) {
