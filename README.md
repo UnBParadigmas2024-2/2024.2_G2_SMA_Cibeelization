@@ -25,9 +25,15 @@
 
 O projeto foi desenvolvido na linguagem *Java* e utiliza a tecnologia de sistemas multiagentes (SMA), baseando-se no framework JADE e utilizando o protocolo FIPA para comunicação e troca de mensagens entre os agentes.
 
-![](/docs/assets/beemovie.png)
+<!-- ![](/docs/assets/beemovie.png)? -->
 
-**Figura 1:** Cena do filme [Bee Movie (2007)](https://en.wikipedia.org/wiki/Bee_Movie).
+<div align='center'><center>
+<img src="docs/assets/beemovie.png" width="50%">
+
+<label><a href="https://en.wikipedia.org/wiki/Bee_Movie">Bee Movie</a> (2007).</label>
+
+</center></div>
+
 
 As classes de agentes presentes no **Cibeelization** incluem:
 
