@@ -76,7 +76,7 @@ public class IntruderBear extends Agent {
                 killMessage.addReceiver(new jade.core.AID(workerName, jade.core.AID.ISLOCALNAME));
                 send(killMessage);
 
-                System.out.println("Operária " + workerName + " morreu por ataque do intruso " + getLocalName() + "!");
+                //System.out.println("Operária " + workerName + " morreu por ataque do intruso " + getLocalName() + "!");
             }
         } else if (QueenBee.droneBeenumber > 0) {
             String droneName = "Zangao" + (QueenBee.droneBeeId - QueenBee.droneBeenumber);
@@ -90,7 +90,7 @@ public class IntruderBear extends Agent {
                 killMessage.addReceiver(new jade.core.AID(droneName, jade.core.AID.ISLOCALNAME));
                 send(killMessage);
 
-                System.out.println("Zangão " + droneName + " morreu por ataque do intruso " + getLocalName() + "!");
+                //System.out.println("Zangão " + droneName + " morreu por ataque do intruso " + getLocalName() + "!");
             }
         } else {
             System.out.println(getLocalName() + " não encontrou zangões ou operárias para atacar!");
