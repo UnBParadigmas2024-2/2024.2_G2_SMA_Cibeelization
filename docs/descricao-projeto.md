@@ -61,36 +61,21 @@ A implementação foi dividida em módulos com responsabilidades bem definidas, 
 
 ### Divisão de Trabalho
 
-| Módulo       | Interação                                                             | Responsável(eis)                       |
-| ------------ | --------------------------------------------------------------------- | -------------------------------------- |
-| **Rainha**   | Gerencia a colmeia, criando novas abelhas, coordenando interações gerais | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
-| **Rinha**    | Implementação de rinhas entre rainhas, garantindo que apenas uma sobreviva para liderar | Igor Penha e Leonardo Machado          |
-| **Novas Rainhas** | Geração de novas rainhas quando a atual morre, garantindo a continuidade da colmeia | Igor Penha e Leonardo Machado          |
-| **Operárias** | Produção de mel e geleia real, além da coleta de pólen               | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
-| **Operárias** | Defesa da colmeia contra intrusos, ajudando a repelir ameaças        | Heitor Marques e José Luís             |
-| **Limpadora** | Mantém a colmeia limpa, removendo resíduos gerados na produção       | Bruno Martins, Igor Penha e Lucas Soares |
-| **Intruso**  | Urso interage com a colmeia, roubando mel, atacando abelhas e podendo ser repelido | Heitor Marques e José Luís             |
-| **Zangão**   | Apoia a rainha no nascimento de novas operárias e participa do voo nupcial | Bruno Ribeiro, Igor Penha e Leonardo Machado |
-| **Inspetora**| Fornece relatórios periódicos da colmeia e coleta uma parte do mel como "imposto" | Igor Penha e Leonardo Machado          |
-| **Interface**| Criação de uma interface para acompanhar o funcionamento da colmeia   | Raquel Eucária e Zenilda Pedrosa      |
 
-
-
-
-| Módulo              | Função                                                                        | Responsáveis                                               |
-| ------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Rainha              | Criação de novas abelhas                                                      | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
-| Rinha de abelhas    | Disputa entre abelhas candidatas a virar rainha                               | Igor Penha e Leonardo Machado                              |
-| Novas Rainhas       | Criação de novas rainhas quando a rainha morre                                | Igor Penha e Leonardo Machado                              |
-| Limpadora           | Limpa o resíduo gerado por abelhas operárias na produção de mel e geléia real | Bruno Martins, Igor Penha e Lucas Soares                   |
-| Operárias           | Produção de mel e Geleia Real                                                 | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
-| Operárias           | Combate a intrusos                                                            | Heitor Marques e José Luis                                 |
-| Intruso             | Aparição periódica e interação com as operárias                               | Heitor Marques e José Luis                                 |
-| Zangão              | Gera Operárias junto com a rainha periodicamente                              | Bruno Ribeiro, Igor Penha e Leonardo Machado               |
-| Inspetora           | Criação da abelha inspetora                                                   | Igor Penha e Leonardo Machado                              |
-| Objetivo da colmeia | Implementação da condição de parada da produção de mel                        | Raquel Eucária e Zenilda Pedrosa                           |
-| Interface Gráfica   | Monitoramento e controle                                                      | Raquel Eucária e Zenilda Pedrosa                           |
-| Documentação        | Registro das informações                                                      | Raquel Eucária e Zenilda Pedrosa                           |
+| Módulo              | Função                                                                                   | Responsáveis                                               |
+| ------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| **Rainha**              | Gerencia a colmeia, criando novas abelhas, coordenando interações gerais                 | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
+| **Rinha de abelhas**    | Implementação de disputa entre rainhas, garantindo que apenas uma sobreviva para liderar | Igor Penha e Leonardo Machado                              |
+| **Novas Rainhas**       | Geração de novas rainhas quando a atual morre, garantindo a continuidade da colmeia      | Igor Penha e Leonardo Machado                              |
+| **Limpadora**           | Limpa o resíduo gerado por abelhas operárias na produção de mel e geléia real            | Bruno Martins, Igor Penha e Lucas Soares                   |
+| **Operárias**           | Produção de mel e geleia real, além da coleta de pólen                                   | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
+| **Operárias**           | Defesa da colmeia contra intrusos, ajudando a repelir ameaças                            | Heitor Marques e José Luis                                 |
+| **Intruso**             | Urso interage com a colmeia, roubando mel, atacando abelhas e podendo ser repelido       | Heitor Marques e José Luis                                 |
+| **Zangão**              | Apoia a rainha no nascimento de novas operárias e participa do voo nupcial               | Bruno Ribeiro, Igor Penha e Leonardo Machado               |
+| **Inspetora**           | Fornece relatórios periódicos da colmeia e coleta uma parte do mel como "imposto"        | Igor Penha e Leonardo Machado                              |
+| **Objetivo da colmeia** | Implementação da condição de parada da produção de mel                                   | Raquel Eucária e Zenilda Pedrosa                           |
+| **Interface Gráfica**   | Criação de uma interface para acompanhar o funcionamento da colmeia                      | Raquel Eucária e Zenilda Pedrosa                           |
+| **Documentação**        | Registro das informações                                                                 | Raquel Eucária e Zenilda Pedrosa                           |
 
 
 ### Regras de Interação
