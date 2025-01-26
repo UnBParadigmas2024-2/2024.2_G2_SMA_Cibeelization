@@ -40,18 +40,18 @@ A implementação será dividida em partes, com cada membro da equipe responsáv
 
 Cada membro da equipe será responsável por desenvolver e integrar os seguintes agentes:
 
-| Módulo    | Interação                                       | Responsável(eis) |
-| --------- | ----------------------------------------------- | ---------------- |
-| Rainha      | Criação de novas abelhas | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
-| Rinha       | Criação da rinha de rainhas | Igor Penha e Leonardo Machado |
-|Novas Rainhas| Criação de novas rainhas quandoa rainha morre | Igor Penha e Leonardo Machado |
-| Operárias   | Produção de mel/Geleia Real | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
-| Operárias   | Combate a intrusos | Heitor Marques e José Luis |
-| Limpadora   | Limpa o resíduo gerado por abelhas operárias na produção de mel e geléia real | Bruno Martins, Igor Penha e Lucas Soares |
-| Intruso     | Aparição periódica e interação com as operárias | Heitor Marques e José Luis |
-| Zangão      | Gera Operárias junto com a rainha periodicamente | Bruno Ribeiro, Igor Penha e Leonardo Machado |
-| Inspetora   | Criação da abelha inspetora | Igor Penha e Leonardo Machado |
-| Interface   | Criar interface | Racheal Eucária e Zenilda Pedrosa |
+| Módulo       | Interação                                                             | Responsável(eis)                       |
+| ------------ | --------------------------------------------------------------------- | -------------------------------------- |
+| **Rainha**   | Gerencia a colmeia, criando novas abelhas, coordenando interações gerais | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
+| **Rinha**    | Implementação de rinhas entre rainhas, garantindo que apenas uma sobreviva para liderar | Igor Penha e Leonardo Machado          |
+| **Novas Rainhas** | Geração de novas rainhas quando a atual morre, garantindo a continuidade da colmeia | Igor Penha e Leonardo Machado          |
+| **Operárias** | Produção de mel e geleia real, além da coleta de pólen               | Bruno Martins, Igor Penha, Leonardo Machado e Lucas Soares |
+| **Operárias** | Defesa da colmeia contra intrusos, ajudando a repelir ameaças        | Heitor Marques e José Luís             |
+| **Limpadora** | Mantém a colmeia limpa, removendo resíduos gerados na produção       | Bruno Martins, Igor Penha e Lucas Soares |
+| **Intruso**  | Urso interage com a colmeia, roubando mel, atacando abelhas e podendo ser repelido | Heitor Marques e José Luís             |
+| **Zangão**   | Apoia a rainha no nascimento de novas operárias e participa do voo nupcial | Bruno Ribeiro, Igor Penha e Leonardo Machado |
+| **Inspetora**| Fornece relatórios periódicos da colmeia e coleta uma parte do mel como "imposto" | Igor Penha e Leonardo Machado          |
+| **Interface**| Criação de uma interface para acompanhar o funcionamento da colmeia   | Raquel Eucária e Zenilda Pedrosa      |
 
 
 ### Regras de interação entre agentes
