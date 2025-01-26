@@ -8,6 +8,18 @@ import javax.swing.*;
 
 public class GuiStatusBee extends JFrame {
 
+    // Variáveis de instância para os labels
+    private JLabel lblInspectorBeeNumberValue;
+    private JLabel lblWorkerBeeNumberValue;
+    private JLabel lblJanitorBeenumberValue;
+    private JLabel lblDroneBeenumberValue;
+    private JLabel lblQueenBeeNumberValue;
+    private JLabel lblIntruderBearNumberValue;
+    private JLabel lblQuantityOfPollenValue;
+    private JLabel lblQuantityOfHoneyValue;
+    private JLabel lblQuantityOfRoyalJellyValue;
+    private JTextArea txtStatus;
+
     // Criação da janela principal
     public GuiStatusBee() {
 
@@ -22,56 +34,56 @@ public class GuiStatusBee extends JFrame {
 
         // Labels para exibir as variáveis
         JLabel lblInspectorBeeNumber = new JLabel("Inspector Bees:");
-        JLabel lblInspectorBeeNumberValue = new JLabel(String.valueOf(QueenBee.InspectorBeeNumber));
+        lblInspectorBeeNumberValue = new JLabel(String.valueOf(QueenBee.InspectorBeeNumber));
         panel.add(lblInspectorBeeNumber);
         panel.add(lblInspectorBeeNumberValue);
 
         JLabel lblWorkerBeeNumber = new JLabel("Worker Bees:");
-        JLabel lblWorkerBeeNumberValue = new JLabel(String.valueOf(QueenBee.WorkerBeeNumber));
+        lblWorkerBeeNumberValue = new JLabel(String.valueOf(QueenBee.WorkerBeeNumber));
         panel.add(lblWorkerBeeNumber);
         panel.add(lblWorkerBeeNumberValue);
 
         JLabel lblJanitorBeenumber = new JLabel("Janitor Bees:");
-        JLabel lblJanitorBeenumberValue = new JLabel(String.valueOf(QueenBee.janitorBeenumber));
+        lblJanitorBeenumberValue = new JLabel(String.valueOf(QueenBee.janitorBeenumber));
         panel.add(lblJanitorBeenumber);
         panel.add(lblJanitorBeenumberValue);
 
         JLabel lblDroneBeenumber = new JLabel("Drone Bees:");
-        JLabel lblDroneBeenumberValue = new JLabel(String.valueOf(QueenBee.droneBeenumber));
+        lblDroneBeenumberValue = new JLabel(String.valueOf(QueenBee.droneBeenumber));
         panel.add(lblDroneBeenumber);
         panel.add(lblDroneBeenumberValue);
 
         JLabel lblQueenBeeNumber = new JLabel("Queen Bees:");
-        JLabel lblQueenBeeNumberValue = new JLabel(String.valueOf(QueenBee.queenBeeNumber));
+        lblQueenBeeNumberValue = new JLabel(String.valueOf(QueenBee.queenBeeNumber));
         panel.add(lblQueenBeeNumber);
         panel.add(lblQueenBeeNumberValue);
 
         JLabel lblIntruderBearNumber = new JLabel("Intruder Bears:");
-        JLabel lblIntruderBearNumberValue = new JLabel(String.valueOf(QueenBee.intruderBearNumber));
+        lblIntruderBearNumberValue = new JLabel(String.valueOf(QueenBee.intruderBearNumber));
         panel.add(lblIntruderBearNumber);
         panel.add(lblIntruderBearNumberValue);
 
         JLabel lblQuantityOfPollen = new JLabel("Pollen:");
-        JLabel lblQuantityOfPollenValue = new JLabel(String.valueOf(WorkerBee.quantityOfPollen));
+        lblQuantityOfPollenValue = new JLabel(String.valueOf(WorkerBee.quantityOfPollen));
         panel.add(lblQuantityOfPollen);
         panel.add(lblQuantityOfPollenValue);
 
         JLabel lblQuantityOfHoney = new JLabel("Honey:");
-        JLabel lblQuantityOfHoneyValue = new JLabel(String.valueOf(WorkerBee.quantityOfHoney));
+        lblQuantityOfHoneyValue = new JLabel(String.valueOf(WorkerBee.quantityOfHoney));
         panel.add(lblQuantityOfHoney);
         panel.add(lblQuantityOfHoneyValue);
 
         JLabel lblQuantityOfRoyalJelly = new JLabel("Royal Jelly:");
-        JLabel lblQuantityOfRoyalJellyValue = new JLabel(String.valueOf(WorkerBee.quantityOfRoyalJelly));
+        lblQuantityOfRoyalJellyValue = new JLabel(String.valueOf(WorkerBee.quantityOfRoyalJelly));
         panel.add(lblQuantityOfRoyalJelly);
         panel.add(lblQuantityOfRoyalJellyValue);
 
         // Adicionando o JTextArea para o campo de status
         JLabel lblStatus = new JLabel("Status:");
-        JTextArea txtStatus = new JTextArea(10, 40);
-        txtStatus.setEditable(false);  // O campo não pode ser editado pelo usuário
-        txtStatus.setLineWrap(true);   // Quebra de linha automática
-        JScrollPane scrollPane = new JScrollPane(txtStatus);  // Para permitir rolar o texto
+        txtStatus = new JTextArea(10, 40);
+        txtStatus.setEditable(false); // O campo não pode ser editado pelo usuário
+        txtStatus.setLineWrap(true); // Quebra de linha automática
+        JScrollPane scrollPane = new JScrollPane(txtStatus); // Para permitir rolar o texto
         panel.add(lblStatus);
         panel.add(scrollPane);
 
@@ -83,8 +95,6 @@ public class GuiStatusBee extends JFrame {
         Timer timer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Atualiza as variáveis e mostra o status automaticamente
-                // updateVariablesFromFields(txtStatus);
                 // Atualizando os valores exibidos nas labels
                 lblInspectorBeeNumberValue.setText(String.valueOf(QueenBee.InspectorBeeNumber));
                 lblWorkerBeeNumberValue.setText(String.valueOf(QueenBee.WorkerBeeNumber));
@@ -98,16 +108,13 @@ public class GuiStatusBee extends JFrame {
 
                 // Exibindo a mensagem de status na JTextArea
                 txtStatus.append("Updated bee statuses!\n");
-                txtStatus.setCaretPosition(txtStatus.getDocument().getLength());  // Rolando até o final
-
+                txtStatus.setCaretPosition(txtStatus.getDocument().getLength()); // Rolando até o final
             }
         });
 
         // Inicia o timer
         timer.start();
     }
-
-
 
     public static void main(String[] args) {
         // Cria e exibe a janela GUI
