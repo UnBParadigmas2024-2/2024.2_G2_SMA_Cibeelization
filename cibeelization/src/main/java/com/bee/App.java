@@ -17,15 +17,9 @@ public class App {
         AgentContainer mainContainer = runtime.createMainContainer(profile);
 
         try {
-<<<<<<< HEAD
             System.out.println("Iniciando a abelha da receita");
             AgentController inspectorBee = mainContainer.createNewAgent("InspectorBee", InspectorBee.class.getName(), null);
             inspectorBee.start();
-=======
-            System.out.println("Iniciando o IntruderSpawner");
-            AgentController intruderSpawner = mainContainer.createNewAgent("IntruderSpawner", IntruderSpawner.class.getName(), null);
-            intruderSpawner.start();
->>>>>>> 0cc47de (feat: lógica para geração de intrusos)
         } catch (StaleProxyException e) {
             System.err.println("Error while starting agents:");
             e.printStackTrace();

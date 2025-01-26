@@ -65,6 +65,8 @@ public class InspectorBee extends Agent{
         System.out.println("Polen: " + WorkerBee.quantityOfPollen);
         System.out.println("Mel: " + WorkerBee.quantityOfHoney);
         System.out.println("Geleia Real: " + WorkerBee.quantityOfRoyalJelly);
+        System.out.println("Resíduos: " + JanitorBee.residual);
+        System.out.println("Intrusos próximos: " + QueenBee.intruderBearNumber);
         System.out.println("==============================\n");
     }
 

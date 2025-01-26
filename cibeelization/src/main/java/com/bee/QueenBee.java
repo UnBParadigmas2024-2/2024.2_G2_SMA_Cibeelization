@@ -12,6 +12,7 @@ import jade.domain.FIPAException;
 import jade.core.AID;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
+import jade.wrapper.ControllerException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class QueenBee extends Agent {
     public static int janitorBeeId = 1;
     public static int ordemAcasalamento = 1;
     private final Random random = new Random();
+
+    public static int intruderBearNumber = 0;
+    public static int intruderBearId = 1;  
     
     @Override
     protected void setup() {
@@ -63,6 +67,13 @@ public class QueenBee extends Agent {
             }
         }
         );
+
+        addBehaviour(new TickerBehaviour(this, 3000) {
+            @Override
+            public void onTick() {
+                detectIntruders();
+            }
+        });
     }
 
     private synchronized void rinha(){
@@ -148,6 +159,19 @@ public class QueenBee extends Agent {
             send(msg);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void detectIntruders() {
+        if (QueenBee.intruderBearNumber < 3 && random.nextDouble() < 0.4) { // 40% de chance de aparecer um urso
+            try {
+                String intruderName = "Urso" + QueenBee.intruderBearId++;
+                getContainerController().createNewAgent(intruderName, "com.bee.IntruderBear", new Object[]{getLocalName()}).start();
+                QueenBee.intruderBearNumber++;
+                //System.out.println("Novo intruso detectado: " + intruderName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

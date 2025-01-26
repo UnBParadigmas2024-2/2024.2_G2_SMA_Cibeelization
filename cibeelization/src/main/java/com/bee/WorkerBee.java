@@ -81,6 +81,20 @@ public class WorkerBee extends Agent {
                 doDelete();
             }
         });
+
+        addBehaviour(new CyclicBehaviour() {
+            @Override
+            public void action() {
+                ACLMessage msg = receive();
+                if (msg != null && msg.getContent().startsWith("KillBee: ")) {
+                    String intruderName = msg.getContent().split(": ")[1];
+                    System.out.println("Operária " + getLocalName() + " morreu por ataque do intruso " + intruderName + "!");
+                    doDelete();
+                } else {
+                    block();
+                }
+            }
+        });        
     }
 
     public synchronized void eatHoney(){
