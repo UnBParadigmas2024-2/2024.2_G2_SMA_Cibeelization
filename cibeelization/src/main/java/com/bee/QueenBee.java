@@ -1,6 +1,9 @@
 package com.bee;
 
 import java.util.Random;
+
+import javax.swing.JFrame;
+
 import java.lang.Thread;
 import jade.core.Agent;
 import jade.core.behaviours.*;
@@ -26,11 +29,14 @@ public class QueenBee extends Agent {
     public static int janitorBeeId = 1;
     public static int ordemAcasalamento = 1;
     private final Random random = new Random();
+    protected JFrame m_frame = null;
     
     @Override
     protected void setup() {
         System.out.println("A abelha rainha " + getLocalName() + " está pronta!");
         
+        setupUI();
+
         registerInDF();
         addBehaviour(new OneShotBehaviour() {
             @Override
@@ -63,6 +69,19 @@ public class QueenBee extends Agent {
             }
         }
         );
+    }
+
+    /**
+    * Configure a UI, o que significa criar e mostrar o quadro principal.
+    */
+    private void setupUI() {
+        // Instanciando a interface gráfica (UI)
+        m_frame = new UIFrame(this);
+
+        m_frame.setSize(400, 200);
+        m_frame.setLocation(400, 400);
+        m_frame.setVisible(true);
+        m_frame.validate();
     }
 
     private synchronized void rinha(){
