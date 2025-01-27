@@ -32,7 +32,6 @@ public class App {
             // Cria o agente InspectorBee e o inicia dentro do contêiner principal.
             AgentController InspectorBeeAC = mainContainer.createNewAgent("InspectorBee", InspectorBee.class.getName(), null);
             InspectorBeeAC.start();
-            QueenBee.InspectorBeeNumber++;
 
         } catch (StaleProxyException e) {
             // Caso ocorra um erro na criacao ou inicializacao de agentes, ele sera tratado aqui.

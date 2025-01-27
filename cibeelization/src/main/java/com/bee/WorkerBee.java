@@ -153,6 +153,7 @@ public class WorkerBee extends Agent {
             // Operaria consome mel, reseta o contador de fome
             // System.out.println("Operaria " + getLocalName() + " comendo mel.");
             quantityOfHoney--;
+            InspectorBee.eatHoney++;
             mortePorFome = 0;
         }
 
@@ -337,7 +338,7 @@ public class WorkerBee extends Agent {
 
     private void processMessage(ACLMessage msg) {
         if (msg.getPerformative() == ACLMessage.INFORM) {
-            if (InspectorBee.STOP_PRODUCTION.equals(msg.getContent())) {
+            if ("STOP_PRODUCTION".equals(msg.getContent())) {
                 goalReached = true; // Atualiza a variável para parar a produção
             }
         } else if (msg.getPerformative() == ACLMessage.REQUEST) {

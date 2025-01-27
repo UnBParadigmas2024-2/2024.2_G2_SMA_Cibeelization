@@ -20,7 +20,7 @@ import jade.core.AID;
 
 public class QueenBee extends Agent {
     // Variaveis estaticas para manter o estado global da colmeia.
-    public static int InspectorBeeNumber = 0;          // Numero de abelhas operarias.
+    public static int InspectorBeeNumber = 1;          // Numero de abelhas operarias.
     public static int WorkerBeeNumber = 0;          // Numero de abelhas operarias.
     public static int janitorBeenumber = 0;  // Numero de abelhas limpadoras.
     public static int droneBeenumber = 0;    // Numero de zangoes.
@@ -69,7 +69,7 @@ public class QueenBee extends Agent {
         addBehaviour(new TickerBehaviour(this, 30000) {
             @Override
             protected void onTick() {
-                InspectorBee.queenBeeNumber--;
+                //InspectorBee.queenBeeNumber--;
                 // System.out.println("Morreu de velhice " + getLocalName());
                 doDelete();
             }
@@ -102,7 +102,7 @@ public class QueenBee extends Agent {
         if (InspectorBee.queenBeeNumber > 1) { // So ocorre se houver mais de uma rainha.
             if (random.nextDouble() < 0.5) { // 50% de chance de uma rainha morrer.
                 // System.out.println("Morreu rainha " + getLocalName() + " na rinha");
-                InspectorBee.queenBeeNumber--;
+                //InspectorBee.queenBeeNumber--;
                 doDelete(); // Remove a rainha derrotada.
             }
         }
