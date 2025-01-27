@@ -24,7 +24,7 @@ public class QueenBee extends Agent {
     public static int WorkerBeeNumber = 0;          // Numero de abelhas operarias.
     public static int janitorBeenumber = 0;  // Numero de abelhas limpadoras.
     public static int droneBeenumber = 0;    // Numero de zangoes.
-    public static int queenBeeNumber = 0;    // Numero de rainhas vivas (maximo de 1 por padrao).
+    // public static int queenBeeNumber = 0;    // Numero de rainhas vivas (maximo de 1 por padrao). --> MODIFICAÇÃO - Passado para inspector 
     public static int intruderBearNumber = 0;  // Numero de ursos intrusos detectados.
     public static int intruderBearId = 1;     // ID sequencial para os ursos intrusos.
     public static int InspectorBeeId = 1;        // ID sequencial para rainhas.
@@ -59,7 +59,7 @@ public class QueenBee extends Agent {
         addBehaviour(new TickerBehaviour(this, 5000) {
             @Override
             protected void onTick() {
-                if (queenBeeNumber == 1) {
+                if (InspectorBee.queenBeeNumber == 1) {
                     voonupcial();
                 }
             }
@@ -69,7 +69,7 @@ public class QueenBee extends Agent {
         addBehaviour(new TickerBehaviour(this, 30000) {
             @Override
             protected void onTick() {
-                queenBeeNumber--;
+                InspectorBee.queenBeeNumber--;
                 // System.out.println("Morreu de velhice " + getLocalName());
                 doDelete();
             }
@@ -99,10 +99,10 @@ public class QueenBee extends Agent {
 
     // Regra nova: Simula uma batalha entre rainhas ("rinha").
     private synchronized void rinha() {
-        if (queenBeeNumber > 1) { // So ocorre se houver mais de uma rainha.
+        if (InspectorBee.queenBeeNumber > 1) { // So ocorre se houver mais de uma rainha.
             if (random.nextDouble() < 0.5) { // 50% de chance de uma rainha morrer.
                 // System.out.println("Morreu rainha " + getLocalName() + " na rinha");
-                queenBeeNumber--;
+                InspectorBee.queenBeeNumber--;
                 doDelete(); // Remove a rainha derrotada.
             }
         }
@@ -230,7 +230,7 @@ public class QueenBee extends Agent {
     @Override
     protected synchronized void takeDown() {
         WorkerBee.activeBees.remove(this);
-        QueenBee.queenBeeNumber--;
+        InspectorBee.queenBeeNumber--;
         // System.out.println(getLocalName() + " foi removido da lista de agentes ativos.");
         try {
             // System.out.println("======= takeDown ======= A abelha rainha (" + getLocalName() + ") morreu");

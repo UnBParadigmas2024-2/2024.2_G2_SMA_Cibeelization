@@ -1,8 +1,12 @@
 package com.bee;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter; // Import corrigido
+import java.awt.event.WindowEvent; // Import corrigido
 
 import javax.swing.*;
 
@@ -54,7 +58,7 @@ public class GuiStatusBee extends JFrame {
         panel.add(lblDroneBeenumberValue);
 
         JLabel lblQueenBeeNumber = new JLabel("Queen Bees:");
-        lblQueenBeeNumberValue = new JLabel(String.valueOf(QueenBee.queenBeeNumber));
+        lblQueenBeeNumberValue = new JLabel(String.valueOf(InspectorBee.queenBeeNumber));
         panel.add(lblQueenBeeNumber);
         panel.add(lblQueenBeeNumberValue);
 
@@ -100,7 +104,7 @@ public class GuiStatusBee extends JFrame {
                 lblWorkerBeeNumberValue.setText(String.valueOf(QueenBee.WorkerBeeNumber));
                 lblJanitorBeenumberValue.setText(String.valueOf(QueenBee.janitorBeenumber));
                 lblDroneBeenumberValue.setText(String.valueOf(QueenBee.droneBeenumber));
-                lblQueenBeeNumberValue.setText(String.valueOf(QueenBee.queenBeeNumber));
+                lblQueenBeeNumberValue.setText(String.valueOf(InspectorBee.queenBeeNumber));
                 lblIntruderBearNumberValue.setText(String.valueOf(QueenBee.intruderBearNumber));
                 lblQuantityOfPollenValue.setText(String.valueOf(WorkerBee.quantityOfPollen));
                 lblQuantityOfHoneyValue.setText(String.valueOf(WorkerBee.quantityOfHoney));
@@ -114,8 +118,15 @@ public class GuiStatusBee extends JFrame {
 
         // Inicia o timer
         timer.start();
-    }
 
+        // Regra nova: clique x fecha o sistema
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+    } 
     public static void main(String[] args) {
         // Cria e exibe a janela GUI
         SwingUtilities.invokeLater(new Runnable() {

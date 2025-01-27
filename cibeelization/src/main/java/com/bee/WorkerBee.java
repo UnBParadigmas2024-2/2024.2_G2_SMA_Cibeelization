@@ -8,6 +8,10 @@ import java.lang.Thread;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.TickerBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 // import jade.domain.DFService;
 import jade.lang.acl.ACLMessage;
 // import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -28,7 +32,7 @@ public class WorkerBee extends Agent {
     private final int minRequiredForRoyalJelly = 3; // Quantidade minima de polen para geleia real
     public static int quantityOfPollen = 0;         // Quantidade total de polen na colmeia
     public static int quantityOfHoney = 10;         // Quantidade total de mel na colmeia
-    public static int honeyGoal = 100;               // Quantidade alvo de mel
+    public static int honeyGoal = 15;               // Quantidade alvo de mel
     public static int quantityOfRoyalJelly = 50;    // Quantidade total de geleia real na colmeia
     private int eatenRoyalJelly = 0;                // Quantidade de geleia real consumida pela operaria
     private int mortePorFome = 0;                   // Contador para rastrear a fome e causar a morte
@@ -39,6 +43,20 @@ public class WorkerBee extends Agent {
 
     @Override
     protected void setup() {
+
+        // Registro da DF
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(getAID());
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType("WorkerBee-agent");
+        sd.setName("WorkerBee-service");
+        dfd.addServices(sd);
+        try {
+            DFService.register(this, dfd); // Registro no DF.
+        } catch (FIPAException e) {
+            e.printStackTrace();
+        }
+
         // Inicializacao da operaria
         // Regras novas: controle de fome, morte por fome e producao com residuos
         // System.out.println("Nova operaria nascida! " + getLocalName());
@@ -49,7 +67,7 @@ public class WorkerBee extends Agent {
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
-                if(QueenBee.queenBeeNumber >= 0){
+                if(InspectorBee.queenBeeNumber >= 0){
                     ACLMessage msg = myAgent.receive();
             
                     if (msg != null) {
@@ -66,11 +84,12 @@ public class WorkerBee extends Agent {
             }
         });
 
+        // adicionar mensagem ACL!!
         // Comportamento ciclico para verificar se a operaria deve virar rainha
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {
-                if(QueenBee.queenBeeNumber <= 0 && quantityOfRoyalJelly > 20){
+                if(InspectorBee.queenBeeNumber <= 0 && quantityOfRoyalJelly > 20){
                     eatRoyalJelly();
                     if(eatenRoyalJelly >= 5){
                         newQueen(); // Nova rainha gerada
@@ -141,10 +160,10 @@ public class WorkerBee extends Agent {
     private synchronized void newQueen() {
         // Cria uma nova rainha
         try {
-            String queenName = "QueenBee" + QueenBee.queenBeeId++;
+            String queenName = "QueenBee - Rinha" + QueenBee.queenBeeId++;
             AgentController NewQueenBee2AC = getContainerController().createNewAgent(queenName, "com.bee.QueenBee", null);
             NewQueenBee2AC.start();
-            QueenBee.queenBeeNumber++;
+            InspectorBee.queenBeeNumber++;
             // System.out.println("A abelha operaria virou uma nova rainha: ");
         } 
         catch (Exception e) {
@@ -204,6 +223,8 @@ public class WorkerBee extends Agent {
         }
     }
 
+    // Regra nova: Envio de mensagem quando meta for atingida
+    // Informa para inspector que meta foi atingida  
     private synchronized void makeHoneyOrRoyalJelly() {
         // System.out.println("Operaria " + getLocalName() + " esta tentando produzir algo...");
         // System.out.println("Polen = " + quantityOfPollen);
@@ -224,9 +245,10 @@ public class WorkerBee extends Agent {
                 JanitorBee.residual += 2;
                 // System.out.println("gerando + 2 de residuo");
                 send(report);
-            } else {
-                // System.out.println("tem mt residuo pra geleia real");
-            }
+            } 
+            // else {
+            //     System.out.println("tem mt residuo pra geleia real");
+            // }
         } else if (quantityOfPollen >= minRequiredForHoney) {
             if (JanitorBee.residual < 10) {
                 // produzir mel
@@ -235,13 +257,23 @@ public class WorkerBee extends Agent {
                 // System.out.println("Operaria " + getLocalName() + " produziu mel! Mel total: " + quantityOfHoney);
 
                 // Verificar se atingiu honeyGoal unidades de mel
-                if (quantityOfHoney >= honeyGoal || (QueenBee.queenBeeNumber == 0 && QueenBee.WorkerBeeNumber == 0)) {
+                if (quantityOfHoney >= honeyGoal || (InspectorBee.queenBeeNumber == 0 && QueenBee.WorkerBeeNumber == 0)) {
                     System.out.println("Operaria " + getLocalName() + " atingiu a producao maxima de mel (" + honeyGoal + ") e a colmeia vai parar.");
+                    System.out.println("QUANTIDADE DE MEL = " + quantityOfHoney);
+                    
 
                     // Chama o método para remover todos os agentes
-                    WorkerBee.terminateAllBees();
+                    //WorkerBee.terminateAllBees();
+                    // ========
+                    // = novo =
+                    // ========
+                    // Enviar mensagem para o InspectorBee notificando que o objetivo foi atingido
+                    ACLMessage goalReachedMessage = new ACLMessage(ACLMessage.INFORM);
+                    goalReachedMessage.addReceiver(new jade.core.AID("InspectorBee", jade.core.AID.ISLOCALNAME)); // Nome do agente Inspector
+                    goalReachedMessage.setContent(InspectorBee.GOAL_REACHED);
+                    send(goalReachedMessage);
 
-                    doDelete(); // Remove o próprio agente
+                    // doDelete(); // Remove o próprio agente
                     return; // Interrompe o método
                 }
 
@@ -251,39 +283,15 @@ public class WorkerBee extends Agent {
                 JanitorBee.residual += 1;
                 // System.out.println("gerando + 1 de residuo");
                 send(report);
-            } else {
-                // System.out.println("mt residuo pra mel");
-            }
-        } else {
-            // System.out.println("Operaria " + getLocalName() + " nao conseguiu produzir por falta de polen.");
-        }
+            } 
+            // else {
+            //     System.out.println("mt residuo pra mel");
+            // }
+        } 
+        //else {
+        //     System.out.println("Operaria " + getLocalName() + " nao conseguiu produzir por falta de polen.");
+        // }
     }
-
-    
-    // Método para encerrar todos os agentes ativos
-    public static synchronized void terminateAllBees() {
-        // Itera sobre a lista de agentes ativos
-        for (Agent bee : new ArrayList<>(activeBees)) {
-            try {
-                // Encerra o agente
-                //System.out.println("Encerrando o agente: " + bee.getLocalName());
-                bee.doDelete();
-            } catch (Exception e) {
-                //System.err.println("Erro ao encerrar o agente " + bee.getLocalName() + ": " + e.getMessage());
-                e.printStackTrace();
-            }
-        }
-
-        // Limpa a lista após encerrar os agentes
-        activeBees.clear();
-
-        // Encerra o programa
-        System.out.println("Todos os agentes foram removidos. O programa foi encerrado.");
-        InspectorBee.printa_recursos();
-        System.exit(0);
-        
-    }
-
 
     private void processMessage(ACLMessage msg) {
         if (msg.getPerformative() == ACLMessage.INFORM) {
