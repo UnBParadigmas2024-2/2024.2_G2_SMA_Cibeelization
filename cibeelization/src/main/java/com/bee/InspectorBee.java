@@ -30,6 +30,7 @@ public class InspectorBee extends Agent {
     private static final long serialVersionUID = 1L;
     
     public static final String GOAL_REACHED = "GOAL_REACHED";
+
     public static int ciclos = 0; // Contador de ciclos para monitoramento.
     public static int tlBee = 0; // TOTAL ABELHAS
     public static int tlProduction = 0; // TOTAL PRODUÇÃO

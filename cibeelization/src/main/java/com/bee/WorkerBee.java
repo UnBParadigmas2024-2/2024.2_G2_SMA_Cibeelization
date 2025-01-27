@@ -337,7 +337,7 @@ public class WorkerBee extends Agent {
 
     private void processMessage(ACLMessage msg) {
         if (msg.getPerformative() == ACLMessage.INFORM) {
-            if (InspectorBee.STOP_PRODUCTION.equals(msg.getContent())) {
+            if ("STOP_PRODUCTION".equals(msg.getContent())) {
                 goalReached = true; // Atualiza a variável para parar a produção
             }
         } else if (msg.getPerformative() == ACLMessage.REQUEST) {
