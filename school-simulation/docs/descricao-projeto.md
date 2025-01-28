@@ -29,10 +29,6 @@ Neste projeto, simulei um ambiente escolar, onde agentes desempenham papéis esp
   - Envia mensagens periódicamente aos alunos.
   - Inicia uma aula
 
-## Metodologia
-
-A implementação foi dividida em módulos com responsabilidades bem definidas, permitindo a colaboração eficiente entre os membros da equipe. 
-
 ### Etapas de Desenvolvimento
 
 1. **Coordenação do Projeto**: Planejamento, integração de módulos e supervisão do progresso.
