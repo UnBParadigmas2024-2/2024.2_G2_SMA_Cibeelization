@@ -51,7 +51,7 @@ Para executar o projeto, basta executar o script run.sh com os seguintes passos.
 
 ## Vídeo
 
-
+https://youtu.be/xY3yq1-SAdo
 
 ## Fontes
 
