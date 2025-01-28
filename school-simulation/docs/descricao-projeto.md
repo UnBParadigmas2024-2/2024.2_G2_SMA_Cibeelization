@@ -36,15 +36,6 @@ Neste projeto, simulei um ambiente escolar, onde agentes desempenham papéis esp
 3. **Comunicação entre Agentes**: Utilização do protocolo ACL (Agent Communication Language) do JADE.
 4. **Documentação e Códigos**: Registro do processo.
 
-
-## Incrementos e Melhorias
-
-Para melhorar o sistema em versões futuras, pode-se adicionar as seguintes funcionalidades:
-
-- **Persistência**: Possibilidade de salvar o estado da colmeia.
-- **Configuração Dinâmica**: Ajuste de parâmetros como frequência de intrusos e taxa de reprodução.
-- **Relatórios**: Geração de relatórios sobre a produção de mel e combate a intrusos.
-
 ## Estrutura do Projeto
 
 ### Criação do Projeto JADE
