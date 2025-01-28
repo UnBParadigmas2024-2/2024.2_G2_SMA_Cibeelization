@@ -83,6 +83,8 @@ Para executar o projeto, basta executar o makefile através dos seguintes passos
 
 ## Vídeo
 
+[Vídeo](https://www.youtube.com/watch?v=RFO6-renjpw)
+
 ## Participações
 
 | Nome do Membro | Contribuição | Significância da Contribuição para o Projeto (Excelente/Boa/Regular/Ruim/Nula) | Comprobatórios |
